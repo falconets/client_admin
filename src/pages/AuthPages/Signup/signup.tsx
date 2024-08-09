@@ -20,11 +20,12 @@ import {
 import { BadgeRounded, FileUploadOutlined } from "@mui/icons-material/";
 import { FormEvent, useRef, useState } from "react";
 import { useMutation } from "@apollo/client";
-import useAuthPageStore from "@store/authePageStore";
 import mutations from "@api/mutations";
 import { uploadImage, deleteImage } from "@api/firebase"
 import ModeToggle from "@common/ModeToggle";
 import usePositionedSnackbar from "@hooks/snackbar";
+import { useNavigate } from 'react-router-dom';
+import Routes from '@route';
 
 interface FormElements extends HTMLFormControlsCollection {
   email: HTMLInputElement;
@@ -47,8 +48,8 @@ const Signup: React.FC = () => {
   const [gender, setGender] = useState<string>('')
   const [password, setPassword] = useState<string>("");
   const [signUp, { error, loading }] = useMutation(mutations.signup);
-  const { navigateTo } = useAuthPageStore();
   const { showSnackbar } = usePositionedSnackbar()
+  const navigate = useNavigate()
 
   const handleSubmit = async (event: FormEvent<SignInFormElement>) => {
     event.preventDefault();
@@ -86,7 +87,7 @@ const Signup: React.FC = () => {
             message: "You have successfully signed up!",
             type:"success"
           })
-          navigateTo('signin')
+          navigate(Routes.signin)
         });
       }catch(err){
         await deleteImage(upload as string)
@@ -178,7 +179,7 @@ const Signup: React.FC = () => {
               <IconButton variant="soft" color="primary" size="sm">
                 <BadgeRounded />
               </IconButton>
-              <Typography level="title-lg">ZamHubBusTicket</Typography>
+              <Typography level="title-lg">BusHub</Typography>
             </Box>
             <ModeToggle />
           </Box>
@@ -212,7 +213,7 @@ const Signup: React.FC = () => {
                 <Typography level="h3">Sign Up</Typography>
                 <Typography level="body-sm">
                   Already have an account?{" "}
-                  <Link onClick={() => navigateTo("signin")} level="title-sm">
+                  <Link onClick={() => navigate(Routes.signin)} level="title-sm">
                     Sign in!
                   </Link>
                 </Typography>
@@ -340,7 +341,7 @@ const Signup: React.FC = () => {
           </Box>
           <Box component="footer" sx={{ py: 3 }}>
             <Typography level="body-xs" textAlign="center">
-              © Zamhubticketbus {new Date().getFullYear()}
+              © BusHub {new Date().getFullYear()}
             </Typography>
           </Box>
         </Box>

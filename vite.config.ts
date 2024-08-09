@@ -20,6 +20,9 @@ export default defineConfig({
       '@common': path.resolve(__dirname, 'src/components/common'),
       '@modal': path.resolve(__dirname, 'src/components/modals'),
       '@store': path.resolve(__dirname, 'src/store'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@route': path.resolve(__dirname, 'src/route'),
+
     },
   },
   server:{

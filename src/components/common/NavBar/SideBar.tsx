@@ -21,11 +21,18 @@ import {
   Sheet,
   Typography,
 } from "@mui/joy";
-import appPageStore from "@store/appPageStore";
 import { closeSidebar } from "../../../utils";
+import { useMatch, useNavigate } from "react-router-dom";
+import Routes from "@route";
 
 const Sidebar = () => {
-  const { dashboard, manage_routes, my_profile, goTo } = appPageStore()
+  const navigate = useNavigate();
+
+  const dashboardMatch = !!useMatch(Routes.dashboard);
+  const manageRoutesMatch = !!useMatch(Routes.manageRoutes);
+  const myProfileMatch = !!useMatch(Routes.myProfile);
+  const newUserMatch = !!useMatch(Routes.newUser);
+  const rolesMatch = !!useMatch(Routes.roles);
 
   return (
     <Sheet
@@ -86,7 +93,7 @@ const Sidebar = () => {
         <IconButton variant="soft" color="primary" size="sm">
           <BrightnessAutoRounded />
         </IconButton>
-        <Typography level="title-lg">Zamhub</Typography>
+        <Typography level="title-lg">Bushub</Typography>
         <ModeToggle sx={{ ml: "auto" }} />
       </Box>
       <Box
@@ -105,13 +112,16 @@ const Sidebar = () => {
           size="sm"
           sx={{
             gap: 1,
-            position: 'relative',
+            position: "relative",
             "--List-nestedInsetStart": "30px",
             "--ListItem-radius": (theme) => theme.vars.radius.sm,
           }}
         >
           <ListItem>
-            <ListItemButton selected={dashboard} onClick={()=> goTo('dashboard')}>
+            <ListItemButton
+              selected={dashboardMatch}
+              onClick={() => navigate(Routes.dashboard)}
+            >
               <DashboardRounded />
               <ListItemContent>
                 <Typography level="title-sm">Dashboard</Typography>
@@ -120,7 +130,10 @@ const Sidebar = () => {
           </ListItem>
 
           <ListItem>
-            <ListItemButton selected={manage_routes} onClick={()=> goTo('manage_routes')}>
+            <ListItemButton
+              selected={manageRoutesMatch}
+              onClick={() => navigate(Routes.manageRoutes)}
+            >
               <AltRouteRounded />
               <ListItemContent>
                 <Typography level="title-sm">Manage Routes</Typography>
@@ -131,40 +144,55 @@ const Sidebar = () => {
           <ListItem nested>
             <Toggler
               renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() =>{
-                  setOpen(!open)
-                  goTo('my_profile')
-                  } } selected={my_profile}>
+                <ListItemButton
+                  onClick={() => {
+                    setOpen(!open);
+                  }}
+                >
                   <GroupRounded />
                   <ListItemContent>
                     <Typography level="title-sm">Users</Typography>
                   </ListItemContent>
                   <KeyboardArrowDown
                     sx={{ transform: open ? "rotate(180deg)" : "none" }}
-                    />
+                  />
                 </ListItemButton>
               )}
               defaultExpanded
             >
               <List sx={{ gap: 0.5 }}>
                 <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton selected={my_profile} onClick={()=> goTo('my_profile')}>My profile</ListItemButton>
+                  <ListItemButton
+                    selected={myProfileMatch}
+                    onClick={() => navigate(Routes.myProfile)}
+                  >
+                    My profile
+                  </ListItemButton>
                 </ListItem>
                 <ListItem>
-                  <ListItemButton>Create a new user</ListItemButton>
+                  <ListItemButton
+                    selected={newUserMatch}
+                    onClick={() => navigate(Routes.newUser)}
+                  >
+                    Create a new user
+                  </ListItemButton>
                 </ListItem>
                 <ListItem>
-                  <ListItemButton>Roles & permission</ListItemButton>
+                  <ListItemButton
+                    selected={rolesMatch}
+                    onClick={() => navigate(Routes.roles)}
+                  >
+                    Roles & permission
+                  </ListItemButton>
                 </ListItem>
               </List>
             </Toggler>
           </ListItem>
 
-          <Box sx={{position:'absolute', bottom: 0, width: '100%'}}>
+          <Box sx={{ position: "absolute", bottom: 0, width: "100%" }}>
             <Divider />
             <CustomAvatar />
           </Box>
-
         </List>
       </Box>
     </Sheet>

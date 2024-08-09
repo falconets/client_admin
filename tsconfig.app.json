@@ -29,6 +29,8 @@
       "@common/*": ["./components/common/*"],
       "@modal/*": ["./components/modals/*"],
       "@store/*": ["./store/*"],
+      "@pages/*": ["./pages/*"],
+      "@route": ["./route.ts"],
     }
   },
   "include": ["src"]

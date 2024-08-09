@@ -124,7 +124,7 @@ const Signin = () => {
               <IconButton variant="soft" color="primary" size="sm">
                 <BadgeRoundedIcon />
               </IconButton>
-              <Typography level="title-lg">ZamHubBusTicket</Typography>
+              <Typography level="title-lg">BusHub</Typography>
             </Box>
             <ModeToggle />
           </Box>
