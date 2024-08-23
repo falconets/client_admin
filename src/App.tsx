@@ -4,23 +4,27 @@ import Toast from "@common/Toast";
 import { useEffect } from "react";
 import NavBar from "@common/NavBar";
 import Header from "@common/Header";
-import { Box, CssBaseline, CssVarsProvider, useTheme } from "@mui/joy";
-import { useMediaQuery } from "@mui/material";
+import { Box, CssBaseline, CssVarsProvider } from "@mui/joy";
+
 
 const App = () => {
-  const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
+  //const theme = useTheme();
+  //const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
     window.document.title = "BusHub";
   }, []);
+
+
+
+
   return (
     <CssVarsProvider>
       <CssBaseline />
       <Box sx={{ display: "flex", minHeight: "100dvh", width: "100%" }}>
         <NavBar />
         <Header />
-
+        <Toast />
         <Box
           component="main"
           className="MainContent"

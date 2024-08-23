@@ -1,4 +1,6 @@
 import { gql } from "@apollo/client";
+import buses from "./buses";
+import schedules from "./schedules";
 
 const listAllcompanies = gql`
   query AllCompanies {
@@ -16,6 +18,7 @@ const listAllcompanies = gql`
     }
   }
 `;
+
 
 const userById = gql`
   query UserById($userByIdId: Int) {
@@ -58,4 +61,6 @@ export default {
   listAllcompanies,
   userById,
   listOfAllBusRoutes,
+  ...buses,
+  ...schedules,
 };

@@ -7,6 +7,11 @@ import {
   DashboardRounded,
   GroupRounded,
   KeyboardArrowDown,
+  CalendarMonthRounded,
+  AccountCircleRounded,
+  PersonAddAlt1Rounded,
+  ManageAccountsRounded,
+  DirectionsBusRounded,
 } from "@mui/icons-material";
 import {
   Box,
@@ -33,6 +38,8 @@ const Sidebar = () => {
   const myProfileMatch = !!useMatch(Routes.myProfile);
   const newUserMatch = !!useMatch(Routes.newUser);
   const rolesMatch = !!useMatch(Routes.roles);
+  const scheduleMatch = !!useMatch(Routes.schedule);
+  const busesMatch = !!useMatch(Routes.buses);
 
   return (
     <Sheet
@@ -131,12 +138,36 @@ const Sidebar = () => {
 
           <ListItem>
             <ListItemButton
+              selected={busesMatch}
+              onClick={() => navigate(Routes.buses)}
+            >
+                <DirectionsBusRounded />
+              <ListItemContent>
+                <Typography level="title-sm">Buses</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton
               selected={manageRoutesMatch}
               onClick={() => navigate(Routes.manageRoutes)}
             >
               <AltRouteRounded />
               <ListItemContent>
                 <Typography level="title-sm">Manage Routes</Typography>
+              </ListItemContent>
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem>
+            <ListItemButton
+              selected={scheduleMatch}
+              onClick={() => navigate(Routes.schedule)}
+            >
+              <CalendarMonthRounded />
+              <ListItemContent>
+                <Typography level="title-sm">Schedules</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
@@ -166,7 +197,10 @@ const Sidebar = () => {
                     selected={myProfileMatch}
                     onClick={() => navigate(Routes.myProfile)}
                   >
-                    My profile
+                    <AccountCircleRounded />
+                    <ListItemContent>
+                    <Typography level="title-sm">My profile</Typography>
+                    </ListItemContent>
                   </ListItemButton>
                 </ListItem>
                 <ListItem>
@@ -174,7 +208,10 @@ const Sidebar = () => {
                     selected={newUserMatch}
                     onClick={() => navigate(Routes.newUser)}
                   >
-                    Create a new user
+                    <PersonAddAlt1Rounded />
+                    <ListItemContent>
+                    <Typography level="title-sm">Create user</Typography>
+                    </ListItemContent>
                   </ListItemButton>
                 </ListItem>
                 <ListItem>
@@ -182,7 +219,10 @@ const Sidebar = () => {
                     selected={rolesMatch}
                     onClick={() => navigate(Routes.roles)}
                   >
-                    Roles & permission
+                    <ManageAccountsRounded />
+                    <ListItemContent>
+                    <Typography level="title-sm">Roles & permissions</Typography>
+                    </ListItemContent>
                   </ListItemButton>
                 </ListItem>
               </List>

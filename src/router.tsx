@@ -6,6 +6,11 @@ import ProtectedRoute from "@pages/ProtectedRoute";
 import Dashboard from "@pages/App/DashBoard";
 import ManageRoutes from "@pages/App/ManageRoutes";
 import Signup from "@pages/AuthPages/Signup";
+import Scheduler from "@pages/App/Scheduler";
+import Buses from "@pages/App/Buses";
+import ErrorPage from "@pages/App/ErrorPage";
+import { useJsApiLoader } from "@react-google-maps/api";
+
 
 const route = createBrowserRouter([
   {
@@ -15,16 +20,23 @@ const route = createBrowserRouter([
         <App />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         path: Routes.dashboard,
         element: <Dashboard />,
       },{
+        path: Routes.buses,
+        element:<Buses />
+      },{
         path: Routes.manageRoutes,
         element: <ManageRoutes />,
       },{
+        path:Routes.schedule,
+        element: <Scheduler />,
+      },{
         path: Routes.myProfile,
-        element: <div>My Profile</div>,
+        element: <div>My profile</div>,
       },{
         path: Routes.newUser,
         element: <div>New User</div>,

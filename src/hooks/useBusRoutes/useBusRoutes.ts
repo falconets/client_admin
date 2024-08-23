@@ -6,14 +6,6 @@ import userStore from "@store/userStore";
 import { BusRoutesProps } from "@types";
 import { useEffect, useState } from "react";
 
-interface formElementProps {
-  route: string;
-  distance: string;
-  duration: string;
-  departure: string;
-  destination: string;
-  price: string;
-}
 
 const useBusRoutes = () => {
   const { userInfos } = userStore();
@@ -39,20 +31,20 @@ const useBusRoutes = () => {
   }, [error, queryLoading, data]);
 
   const addBusRoute = async (
-    formElements: formElementProps,
+    formElements: BusRoutesProps,
     handleClose: () => void
   ) => {
     try {
       await addBusRoutes({
         variables: {
           companyId: userInfos?.bus_company_id,
-          routeName: formElements.route,
-          distanceInKm: parseInt(formElements.distance),
-          durationInHours: parseInt(formElements.duration),
-          startLocation: formElements.departure,
-          endLocation: formElements.destination,
+          routeName: formElements.routeName,
+          distanceInKm: formElements.distanceInKm,
+          durationInHours: formElements.durationInHours,
+          startLocation: formElements.startLocation,
+          endLocation: formElements.endLocation,
           active: false,
-          price: parseInt(formElements.price),
+          price: formElements.price,
         },
       });
 

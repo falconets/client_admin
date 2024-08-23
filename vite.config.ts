@@ -22,6 +22,7 @@ export default defineConfig({
       '@store': path.resolve(__dirname, 'src/store'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@route': path.resolve(__dirname, 'src/route'),
+      '@themes': path.resolve(__dirname, 'src/theme'),
 
     },
   },

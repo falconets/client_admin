@@ -1,4 +1,6 @@
 import { gql } from "@apollo/client";
+import schedules from "./schedules";
+import routes from "./routes";
 
 const signin = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -34,73 +36,10 @@ const signup = gql`
   }
 `;
 
-const addBusRoute = gql`
-  mutation AddBusRoutes(
-    $companyId: Int!
-    $routeName: String
-    $distanceInKm: Int
-    $durationInHours: Int
-    $startLocation: String
-    $endLocation: String
-    $active: Boolean
-    $price: Int
-  ) {
-    addBusRoutes(
-      companyId: $companyId
-      routeName: $routeName
-      distanceInKm: $distanceInKm
-      durationInHours: $durationInHours
-      startLocation: $startLocation
-      endLocation: $endLocation
-      active: $active
-      price: $price
-    ) {
-      id
-      companyId
-      routeName
-      distanceInKm
-      durationInHours
-      startLocation
-      endLocation
-      active
-      price
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-const toggleBusRouteActive = gql`
-  mutation ToggleBusRoutesActive(
-    $toggleBusRoutesActiveId: String!
-    $active: Boolean!
-  ) {
-    toggleBusRoutesActive(id: $toggleBusRoutesActiveId, active: $active) {
-      id
-      companyId
-      routeName
-      distanceInKm
-      durationInHours
-      startLocation
-      endLocation
-      active
-      price
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-const deleteBusRoute = gql`
-  mutation Mutation($deleteBusRoutesId: String) {
-  deleteBusRoutes(id: $deleteBusRoutesId)
-}
-`
 
 export default {
   signin,
   signup,
-  addBusRoute,
-  toggleBusRouteActive,
-  deleteBusRoute
+  ...schedules,
+  ...routes,
 };

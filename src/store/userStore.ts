@@ -21,7 +21,7 @@ interface userStoreProps {
   setUserInfo: (infos: userInfos) => void;
 }
 
-const userStore = create<userStoreProps>((set) => ({
+const userStore = create<userStoreProps>((set):userStoreProps => ({
   userInfos: null,
   setUserInfo: (infos) => set({ userInfos: { ...infos } }),
 }));

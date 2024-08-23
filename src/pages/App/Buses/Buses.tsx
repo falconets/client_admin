@@ -2,30 +2,17 @@ import {
   AddCircleOutlineRounded,
   LocalPrintshopRounded,
 } from "@mui/icons-material";
-import { Box, Stack, Tooltip, Typography } from "@mui/joy";
-import routeModuleStore from "@store/routeModuleStore";
-import BreadCrumb from "../BreadCrumb";
-import RoutesTable from "../RoutesTable";
-import AddRouteModal from "./component/AddRouteModal";
+import * as S from "./styled";
+import { Box, Typography, Stack, Tooltip, Grid } from "@mui/joy";
+import BreadCrumb from "./BreadCrumb";
+import Mobile from "./mobile";
+import AddBusModal from "./AddBusModal/AddBusModal";
 import { useState } from "react";
 
-const Routes = () => {
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
-  const handleIsAddModalOpen = () => {
-    setIsAddModalOpen(!isAddModalOpen);
-  }
-
+const Buses = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   return (
-    <Box
-      className="routes"
-      sx={{
-        flex: 1,
-        flexDirection: "column",
-        minWidth: 0,
-        gap: 1,
-      }}
-    >
+    <S.Container>
       <Box
         sx={{
           bgcolor: "background.body",
@@ -50,7 +37,7 @@ const Routes = () => {
         }}
       >
         <Typography level="h2" component="h1">
-          Routes
+          Buses
         </Typography>
         <Stack spacing={2} direction="row">
           <Tooltip
@@ -60,7 +47,11 @@ const Routes = () => {
             variant="soft"
             arrow
           >
-            <AddCircleOutlineRounded color="primary" sx={{ fontSize: 28 }} onClick={handleIsAddModalOpen} />
+            <AddCircleOutlineRounded
+              color="primary"
+              sx={{ fontSize: 28 }}
+              onClick={() => setModalOpen(true)}
+            />
           </Tooltip>
           <Tooltip
             title="Print the table"
@@ -73,14 +64,15 @@ const Routes = () => {
           </Tooltip>
         </Stack>
       </Box>
-
-      <Box sx={{px: { sm: 2, md: 6 }}}>
-        <RoutesTable />
-        <AddRouteModal open={isAddModalOpen} onClose={handleIsAddModalOpen}/>
-      </Box>
-
-    </Box>
+      <Grid container>
+        <Grid xs={12} md={6}>
+          <Mobile />
+        </Grid>
+        <Grid xs={12} md={6}></Grid>
+      </Grid>
+      <AddBusModal isOpen={modalOpen} setIsOpen={setModalOpen} />
+    </S.Container>
   );
 };
 
-export default Routes;
+export default Buses;

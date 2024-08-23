@@ -7,7 +7,9 @@ enum Routes {
     newUser = '/new-user',
     roles = '/roles',
     routeDetail = '/route-detail/:id',
-    profileDetail = '/profile-detail/:id'
+    profileDetail = '/profile-detail/:id',
+    schedule= '/schedule',
+    buses='/buses',
 }
 
 export default Routes
