@@ -9,3 +9,8 @@
   height: 800px;
   max-height: 90vh;
 }
+
+.layout{
+  height:40px;
+  width: 30%;
+}

@@ -28,12 +28,12 @@ const Schedulers = () => {
       borderColor: "#307DD7",
       calendar: "BBC20",
       description: "test test",
-      end: new Date(2024, 8, 18, 14,0,0),
+      end: new Date(2018, 8, 18, 14,0,0),
       id: "46fef757-a3f8-477b-ab21-3f393576a1a9",
       recurrenceException: "",
-      recurrenceRule: "FREQ=DAILY;INTERVAL=1;COUNT=1000",
+      recurrenceRule: null,
       route: "fcc7dd60-c0a3-4873-aa52-6cd33e299230",
-      start: new Date(2024, 8, 18, 8, 0,0),
+      start: new Date(2018, 8, 18, 8, 0,0),
       tickets: 76,
     },
   ]);
@@ -45,8 +45,8 @@ const Schedulers = () => {
         listBus.push({
           id: bus.bus_id,
           calendar: bus.plate_number,
-          end: new Date(2024, 8, 8, 16, 0, 0),
-          start: new Date(2024, 18, 8, 8, 0, 0),
+          end: new Date(2018, 8, 8, 16, 0, 0),
+          start: new Date(2018, 18, 8, 8, 0, 0),
           ticket: 1,
           route: "encoded",
         })

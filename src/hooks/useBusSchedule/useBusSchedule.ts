@@ -22,6 +22,7 @@ const useBusSchedule = () =>{
 
     useEffect(() => {
         if (!scheduleLoading && !scheduleError && scheduleData) {
+            console.log('dchedule data',scheduleData)
                       setSchedules(scheduleData.getBusSchedules);
         }
         if(scheduleError){

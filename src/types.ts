@@ -34,7 +34,7 @@ export interface BusRoutesProps{
 }
 
 export interface BusesProps{
-  bus_id?: number
+  bus_id?: string
   bus_model: string
   plate_number: string
   seat_capacity: number
@@ -70,3 +70,26 @@ export type BuseScheduleData = {
   borderColor?: string,
 }
 
+export interface BusSeats{
+  seat_id?: string;
+  busId?: number;
+  seatNumber: string;
+  seatType: string;
+  is_available?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  row: number;
+  col: number;
+  aisleColumn: number;
+}
+export type SeatStatus = "available" | "selected" | "occupied";
+export type SeatType = "window" | "aisle" | "middle";
+
+export interface Seat {
+  row: number;
+  col: number;
+  aisleColumn: number;
+  status: SeatStatus;
+  type: SeatType;
+  seatNumber: string | number;
+}

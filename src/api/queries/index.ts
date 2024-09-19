@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import buses from "./buses";
 import schedules from "./schedules";
+import busSeats from "./busSeats";
 
 const listAllcompanies = gql`
   query AllCompanies {
@@ -63,4 +64,5 @@ export default {
   listOfAllBusRoutes,
   ...buses,
   ...schedules,
+  ...busSeats,
 };

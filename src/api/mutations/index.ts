@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 import schedules from "./schedules";
 import routes from "./routes";
+import busSeat from "./busSeat";
 
 const signin = gql`
   mutation SignIn($email: String!, $password: String!) {
@@ -42,4 +43,5 @@ export default {
   signup,
   ...schedules,
   ...routes,
+  ...busSeat
 };
