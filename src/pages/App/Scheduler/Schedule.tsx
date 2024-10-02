@@ -41,7 +41,7 @@ const Schedulers = () => {
   useEffect(() => {
     if (buses) {
       const listBus: Object[] = [];
-      buses?.forEach((bus) =>
+      buses.forEach((bus) =>{
         listBus.push({
           id: bus.bus_id,
           calendar: bus.plate_number,
@@ -49,9 +49,15 @@ const Schedulers = () => {
           start: new Date(2018, 18, 8, 8, 0, 0),
           ticket: 1,
           route: "encoded",
-        })
-      );
+          recurrenceException: "",
+          recurrenceRule: null,
+          description: "test test",
+          background: "#307dd7cc",
+          borderColor: "#307DD7"
+      })
+    });
       setAppointments([...appointments, ...listBus] as any);
+      console.log('list buses', listBus)
     }
   }, [buses]);
 

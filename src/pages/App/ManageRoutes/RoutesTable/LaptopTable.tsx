@@ -1,15 +1,13 @@
-import React from 'react'
+import React from "react";
 import { Sheet, Switch, Table } from "@mui/joy";
-import useBusRoutes from '@hooks/useBusRoutes';
-import RowMenu from './component/RowMenu';
-
+import useBusRoutes from "@hooks/useBusRoutes";
+import RowMenu from "./component/RowMenu";
 
 const LaptopTable: React.FC = () => {
-  const {listOfBusRoutes, toggleBusRouteActive } = useBusRoutes()
-
+  const { listOfBusRoutes: routes, toggleBusRouteActive } = useBusRoutes();
 
   return (
-      <Sheet
+    <Sheet
       className="OrderTableContainer"
       variant="outlined"
       sx={{
@@ -34,34 +32,67 @@ const LaptopTable: React.FC = () => {
         }}
       >
         <thead>
-            <tr>
-                  <th style={{width: 35, textAlign: "center", padding:'12px 6px'}}>#</th>
-                  <th style={{ textAlign: "center", padding:'12px 6px' }}>Route Name</th>
-                  <th style={{width: 200, textAlign: "center", padding:'12px 6px' }}>Departure Location</th>
-                  <th style={{width: 200, textAlign: "center", padding:'12px 6px' }}>Destination Location</th>
-                  <th style={{width: 60, textAlign: "center", padding:'12px 6px' }}>KM</th>
-                  <th style={{width: 60, textAlign: "center", padding:'12px 6px' }}>hr</th>
-                  <th style={{textAlign: "center", padding:'12px 6px' }}>Price (ticket)</th>
-                  <th style={{textAlign: "center", padding:'12px 6px' }}>Active</th>
-                  <th></th>
-            </tr>
+          <tr>
+            <th style={{ width: 35, textAlign: "center", padding: "12px 6px" }}>
+              #
+            </th>
+            <th style={{ textAlign: "center", padding: "12px 6px" }}>
+              Route Name
+            </th>
+            <th
+              style={{ width: 200, textAlign: "center", padding: "12px 6px" }}
+            >
+              Departure Location
+            </th>
+            <th
+              style={{ width: 200, textAlign: "center", padding: "12px 6px" }}
+            >
+              Destination Location
+            </th>
+            <th style={{ width: 60, textAlign: "center", padding: "12px 6px" }}>
+              KM
+            </th>
+            <th style={{ width: 60, textAlign: "center", padding: "12px 6px" }}>
+              hr
+            </th>
+            <th style={{ textAlign: "center", padding: "12px 6px" }}>
+              Price (ticket)
+            </th>
+            <th style={{ textAlign: "center", padding: "12px 6px" }}>Active</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
-          {listOfBusRoutes && listOfBusRoutes.map((route, index)=> <tr key={route.id}>
-            <td>{index + 1}</td>
-            <td>{route.routeName}</td>
-            <td>{route.startLocation}</td>
-            <td>{route.endLocation}</td>
-            <td>{route.distanceInKm}</td>
-            <td>{route.durationInHours}</td>
-            <td>{route.price}</td>
-            <td><Switch checked={route.active} onChange={(event)=> toggleBusRouteActive(route.id, event.target.checked)} /></td>
-            <td><RowMenu routeId={route.id} /></td>
-          </tr>)}
+          {routes &&
+            routes.map((route, index) => (
+              <tr key={route.id}>
+                <td>{index + 1}</td>
+                <td>{route.routeName}</td>
+                <td>{route.startLocation}</td>
+                <td>{route.endLocation}</td>
+                <td>{route.distanceInKm}</td>
+                <td>{route.durationInHours}</td>
+                <td>{route.price}</td>
+                <td>
+                  <Switch
+                    checked={route.active}
+                    onChange={(event) =>
+                      toggleBusRouteActive(
+                        route.id as string,
+                        event.target.checked
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <RowMenu routeId={route.id as string} />
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </Sheet>
-  )
-}
+  );
+};
 
-export default LaptopTable
+export default LaptopTable;

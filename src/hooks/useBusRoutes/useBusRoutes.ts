@@ -17,7 +17,9 @@ const useBusRoutes = () => {
     error,
     loading: queryLoading,
     refetch,
-  } = useQuery(queries.listOfAllBusRoutes);
+  } = useQuery(queries.getBusRoutesByCompanyId, {
+    variables: {companyId: userInfos?.bus_company_id as number}
+  });
   const [addBusRoutes, { loading: mLoading }] = useMutation(
     mutations.addBusRoute
   );
@@ -26,9 +28,10 @@ const useBusRoutes = () => {
 
   useEffect(() => {
     if (!error && !queryLoading && data) {
-      setListOfBusRoutes(data.getBusRoutes);
+    setListOfBusRoutes(data.getBusRoutesByCompanyId);
     }
   }, [error, queryLoading, data]);
+
 
   const addBusRoute = async (
     formElements: BusRoutesProps,

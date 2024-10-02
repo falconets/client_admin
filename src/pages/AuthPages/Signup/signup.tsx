@@ -65,7 +65,7 @@ const Signup: React.FC = () => {
       gender: gender,
       isEmailVerified: false,
       type: 'admin',
-      busCompanyId: '2',
+      busCompanyId: '1',
     };
   
     if (data.email.trim() !== "" && data.password.trim() !== "") {

@@ -15,15 +15,17 @@ const useBusSchedule = () =>{
         error: scheduleError,
         loading: scheduleLoading,
         refetch
-    } = useQuery(queries.getSchedules);
+    } = useQuery(queries.getScheduleByCompanyId, {
+        variables: { companyId: userInfos?.bus_company_id as number },
+    });
 
     const [addBusSchedule] = useMutation(mutations.addSchedule)
     const [deleteBusSchedule] = useMutation(mutations.deleteSchedule)
 
     useEffect(() => {
         if (!scheduleLoading && !scheduleError && scheduleData) {
-            console.log('dchedule data',scheduleData)
-                      setSchedules(scheduleData.getBusSchedules);
+            console.log('schedule data',scheduleData)
+                      setSchedules(scheduleData.getBusScheduleByCompanyId);
         }
         if(scheduleError){
             showSnackbar({

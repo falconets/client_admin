@@ -20,7 +20,6 @@ const listAllcompanies = gql`
   }
 `;
 
-
 const userById = gql`
   query UserById($userByIdId: Int) {
     userById(id: $userByIdId) {
@@ -42,26 +41,45 @@ const userById = gql`
 
 const listOfAllBusRoutes = gql`
   query GetBusRoutes {
-  getBusRoutes {
-    id
-    companyId
-    routeName
-    distanceInKm
-    durationInHours
-    startLocation
-    endLocation
-    active
-    price
-    createdAt
-    updatedAt
+    getBusRoutes {
+      id
+      companyId
+      routeName
+      distanceInKm
+      durationInHours
+      startLocation
+      endLocation
+      active
+      price
+      createdAt
+      updatedAt
+    }
   }
-}
-`
+`;
+
+const getBusRoutesByCompanyId = gql`
+  query GetBusRoutesByCompanyId($companyId: Int!) {
+    getBusRoutesByCompanyId(companyId: $companyId) {
+      id
+      companyId
+      routeName
+      distanceInKm
+      durationInHours
+      startLocation
+      endLocation
+      active
+      price
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 export default {
   listAllcompanies,
   userById,
   listOfAllBusRoutes,
+  getBusRoutesByCompanyId,
   ...buses,
   ...schedules,
   ...busSeats,
