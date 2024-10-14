@@ -4,7 +4,7 @@ import Toast from "@common/Toast";
 import { useEffect } from "react";
 import NavBar from "@common/NavBar";
 import Header from "@common/Header";
-import { Box, CssBaseline, CssVarsProvider } from "@mui/joy";
+import { Box, Container, CssBaseline, CssVarsProvider } from "@mui/joy";
 
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
         <NavBar />
         <Header />
         <Toast />
-        <Box
+        <Container
           component="main"
           className="MainContent"
           sx={{
@@ -42,7 +42,7 @@ const App = () => {
           }}
         >
           <Outlet />
-        </Box>
+        </Container>
       </Box>
     </CssVarsProvider>
   );

@@ -12,6 +12,8 @@ import {
   PersonAddAlt1Rounded,
   ManageAccountsRounded,
   DirectionsBusRounded,
+  StyleRounded,
+  LeaderboardRounded,
 } from "@mui/icons-material";
 import {
   Box,
@@ -40,6 +42,7 @@ const Sidebar = () => {
   const rolesMatch = !!useMatch(Routes.roles);
   const scheduleMatch = !!useMatch(Routes.schedule);
   const busesMatch = !!useMatch(Routes.buses);
+  const overviewMatch =!!useMatch(Routes.overview);
 
   return (
     <Sheet
@@ -225,6 +228,63 @@ const Sidebar = () => {
                     </ListItemContent>
                   </ListItemButton>
                 </ListItem>
+              </List>
+            </Toggler>
+          </ListItem>
+
+          <ListItem nested>
+            <Toggler
+              renderToggle={({ open, setOpen }) => (
+                <ListItemButton
+                  onClick={() => {
+                    setOpen(!open);
+                  }}
+                >
+                  <StyleRounded />
+                  <ListItemContent>
+                    <Typography level="title-sm">Bookings</Typography>
+                  </ListItemContent>
+                  <KeyboardArrowDown
+                    sx={{ transform: open ? "rotate(180deg)" : "none" }}
+                  />
+                </ListItemButton>
+              )}
+              defaultExpanded
+            >
+              <List sx={{ gap: 0.5 }}>
+                <ListItem sx={{ mt: 0.5 }}>
+                  <ListItemButton
+                    selected={overviewMatch}
+                    onClick={() => navigate(Routes.overview)}
+                  >
+                    <LeaderboardRounded />
+                    <ListItemContent>
+                    <Typography level="title-sm">Overview</Typography>
+                    </ListItemContent>
+                  </ListItemButton>
+                </ListItem>
+                {/* <ListItem>
+                  <ListItemButton
+                    selected={newUserMatch}
+                    onClick={() => navigate(Routes.newUser)}
+                  >
+                    <PersonAddAlt1Rounded />
+                    <ListItemContent>
+                    <Typography level="title-sm">Create user</Typography>
+                    </ListItemContent>
+                  </ListItemButton>
+                </ListItem>
+                <ListItem>
+                  <ListItemButton
+                    selected={rolesMatch}
+                    onClick={() => navigate(Routes.roles)}
+                  >
+                    <ManageAccountsRounded />
+                    <ListItemContent>
+                    <Typography level="title-sm">Roles & permissions</Typography>
+                    </ListItemContent>
+                  </ListItemButton>
+                </ListItem> */}
               </List>
             </Toggler>
           </ListItem>

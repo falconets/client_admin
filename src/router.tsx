@@ -9,7 +9,8 @@ import Signup from "@pages/AuthPages/Signup";
 import Scheduler from "@pages/App/Scheduler";
 import Buses from "@pages/App/Buses";
 import ErrorPage from "@pages/App/ErrorPage";
-import { useJsApiLoader } from "@react-google-maps/api";
+import OverView from "@pages/App/Bookings/overview";
+//import { useJsApiLoader } from "@react-google-maps/api";
 
 
 const route = createBrowserRouter([
@@ -43,6 +44,9 @@ const route = createBrowserRouter([
       },{
         path: Routes.roles,
         element: <div>Roles</div>,
+      },{
+        path: Routes.overview,
+        element: <OverView />,
       }
     ],
   },

@@ -64,7 +64,7 @@ const MobileTable: React.FC = () => {
                       mb: 1,
                     }}
                   >
-                    <RowMenu routeId={route.id} />
+                    <RowMenu routeId={route.id as string} />
                   </Box>
                 
               </ListItemContent>
@@ -72,7 +72,7 @@ const MobileTable: React.FC = () => {
                 <Switch
                   checked={route.active}
                   onChange={(event) =>
-                    toggleBusRouteActive(route.id, event.target.checked)
+                    toggleBusRouteActive(route.id as string, event.target.checked)
                   }
                 />
 

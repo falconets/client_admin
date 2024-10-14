@@ -6,12 +6,9 @@ import {
   AccordionGroup,
   AccordionSummary,
   Box,
-  Button,
   Input,
   Stack,
 } from "@mui/joy";
-import { BusesProps } from "@types";
-import { matchSorter } from "match-sorter";
 import { useState } from "react";
 import SeatSelector from "../Seats/SeatSelector";
 import LayoutModal from "./LayoutModal";
@@ -50,7 +47,7 @@ const Mobile = () => {
               <Accordion
                 key={bus.bus_id}
                 expanded={idx === index}
-                onChange={(event, expanded) => {
+                onChange={(_, expanded) => {
                   setIndex(expanded ? idx : null);
                 }}
               >

@@ -93,3 +93,23 @@ export interface Seat {
   type: SeatType;
   seatNumber: string | number;
 }
+
+export interface CompanyRevenueByPaymentMethod {
+  paymentMethod: number;
+  total_revenue: number;
+  number_of_tickets: number;
+}
+
+export interface SeatAllocationStats {
+  bus_plate_number?: string
+  routeId?: string
+  total_seats: number;
+  total_booked_seats: number;
+  total_available_seats: number;
+}
+
+export interface RevenueReportByTime {
+  booking_date: string;
+  total_revenue: number;
+  total_bookings: number;
+}

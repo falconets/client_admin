@@ -8,13 +8,8 @@ const devUrl = 'http://localhost:3000/api'
 //const isProduction = import.meta.env.VITE_IS_PRODUCTION 
 const mainUrl =  devUrl //isProduction !== "false" ? baseUrl :
 
-const getItem = async (key: string): Promise<string | null> => {
-  return await localforage.getItem<string>(key);
-};
-
-const removeItem = async (key: string): Promise<void> => {
-  await localforage.removeItem(key);
-}
+const getItem = async (key: string): Promise<string | null> => localforage.getItem<string>(key);
+const removeItem = async (key: string): Promise<void> => localforage.removeItem(key);
 
 const httpLink = createHttpLink({ uri: mainUrl });
 
@@ -45,16 +40,15 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 });
 
-const token = await getItem("token");
-
-console.log("Token: ", token);
+const token = await getItem("token"); // Fetch token here
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  operation.setContext(({headers ={}})=>({
+
+  operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
       accept: 'application/json',
-      authorization: token ? token : ' ',
+      authorization: token ? `Bearer ${token}` : '',
     },
   }));
 

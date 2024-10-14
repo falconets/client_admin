@@ -10,6 +10,7 @@ enum Routes {
     profileDetail = '/profile-detail/:id',
     schedule= '/schedule',
     buses='/buses',
+    overview= '/overview',
 }
 
 export default Routes

@@ -12,7 +12,7 @@ import React from "react";
 
 const MapView = () => {
   const mapRef = createRef<GoogleMap>();
-  const [map, setMap] = React.useState<google.maps.Map | null>(null);
+  //const [map, setMap] = React.useState<google.maps.Map | null>(null);
   const libraries:Libraries = ['places']
  
   const { setMapRef, isLoaded:loaded, setIsLoaded } = mapStore();
@@ -50,12 +50,12 @@ const MapView = () => {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
 
-    setMap(map);
+    //setMap(map);
   }, []);
 
-  const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
-    setMap(null);
-  }, []);
+  // const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
+  //   //setMap(null);
+  // }, []);
 
   return (
     isLoaded && (
@@ -66,7 +66,7 @@ const MapView = () => {
         mapContainerStyle={mapStyles}
         onClick={handleMapClick}
         onLoad={onLoad}
-        onUnmount={onUnmount}
+        //onUnmount={onUnmount}
       >
         {markers.map((marker, index) => (
           <Marker
