@@ -17,7 +17,7 @@ interface userInfos {
 
 interface userStoreProps {
   userInfos: userInfos | null;
-  // eslint-disable-next-line no-unused-vars
+   
   setUserInfo: (infos: userInfos) => void;
 }
 

@@ -3,12 +3,12 @@ import { SearchRounded } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
-  AccordionGroup,
   AccordionSummary,
   Box,
-  Input,
+  InputAdornment,
+  TextField,
   Stack,
-} from "@mui/joy";
+} from "@mui/material";
 import { useState } from "react";
 import SeatSelector from "../Seats/SeatSelector";
 import LayoutModal from "./LayoutModal";
@@ -16,73 +16,70 @@ import LayoutModal from "./LayoutModal";
 const Mobile = () => {
   const { buses } = useBuses();
   const [searchKey, setSearchKey] = useState<string>("");
-  const [index, setIndex] = useState<number | null>(0);
-  const [layout, setLayout] = useState<boolean>(false);
-  const [busId, setBusId] = useState<string | null>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+  const [layoutOpen, setLayoutOpen] = useState<boolean>(false);
+  const [selectedBusId, setSelectedBusId] = useState<string | null>(null);
 
   const filterBuses = buses?.filter((bus) =>
     bus.plate_number.toLowerCase().includes(searchKey.toLowerCase())
   );
 
   const handleSetLayout = () => {
-    setLayout(!layout);
+    setLayoutOpen(!layoutOpen);
   };
 
-  const handleSeletedId = (id:string)=>{
-    setBusId(id)
-  }
+  const handleSelectedId = (id: string) => {
+    setSelectedBusId(id);
+  };
 
   return (
     <Box sx={{ display: { md: "none" } }}>
-      <Input
+      <TextField
         placeholder="Search by plate number"
-        startDecorator={<SearchRounded />}
-        sx={{ width: "95%", mx: "auto" }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchRounded />
+            </InputAdornment>
+          ),
+        }}
+        sx={{ width: "95%", mx: "auto", mb: 2 }}
         onChange={(event) => setSearchKey(event.target.value)}
       />
-      <Box>
-        <AccordionGroup sx={{ width: "95%", mx: "auto" }}>
-          {filterBuses?.map((bus, idx) => {
-            return (
-              <Accordion
-                key={bus.bus_id}
-                expanded={idx === index}
-                onChange={(_, expanded) => {
-                  setIndex(expanded ? idx : null);
-                }}
-              >
-                <AccordionSummary>{bus.plate_number}</AccordionSummary>
-                <AccordionDetails>
-                  <Stack direction="column">
-                    <Box
-                      sx={{ display: "flex", justifyContent: "space-between" }}
-                    >
-                      <span>Model:</span> <span>{bus.bus_model}</span>
-                    </Box>
-                    <Box
-                      sx={{ display: "flex", justifyContent: "space-between" }}
-                    >
-                      <span>Capacity:</span> <span>{bus.seat_capacity}</span>
-                    </Box>
-
-                    <Box>
-                      <SeatSelector
-                        busId={bus.bus_id?.toString()}
-                        handleAddSeat={handleSetLayout}
-                        handleSelectedId={handleSeletedId}
-                      />
-                    </Box>
-                  </Stack>
-                </AccordionDetails>
-               <LayoutModal
-                  isOpen={layout}
-                  setIsOpen={handleSetLayout}
-                  busId={busId as string}
-                />
-              </Accordion>
-            );
-          })}
-        </AccordionGroup>
+      <Box sx={{ width: "95%", mx: "auto" }}>
+        {filterBuses?.map((bus, idx) => (
+          <Accordion
+            key={bus.bus_id}
+            expanded={idx === expandedIndex}
+            onChange={(_, isExpanded) => {
+              setExpandedIndex(isExpanded ? idx : null);
+            }}
+          >
+            <AccordionSummary>{bus.plate_number}</AccordionSummary>
+            <AccordionDetails>
+              <Stack direction="column" spacing={2}>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <span>Model:</span> <span>{bus.bus_model}</span>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <span>Capacity:</span> <span>{bus.seat_capacity}</span>
+                </Box>
+                <Box>
+                  <SeatSelector
+                    busId={bus.bus_id?.toString()}
+                    handleAddSeat={handleSetLayout}
+                    handleSelectedId={handleSelectedId}
+                  />
+                </Box>
+              </Stack>
+            </AccordionDetails>
+            <LayoutModal
+              isOpen={layoutOpen}
+              setIsOpen={handleSetLayout}
+              busId={selectedBusId as string}
+            />
+          </Accordion>
+        ))}
       </Box>
     </Box>
   );

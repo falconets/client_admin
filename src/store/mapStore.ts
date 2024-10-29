@@ -5,7 +5,7 @@ type ownprop = {
       isLoaded: boolean
       setIsLoaded: (state:boolean) => void
       mapRef: React.RefObject<GoogleMap> | null,
-      // eslint-disable-next-line no-unused-vars
+       
       setMapRef: (ref:React.RefObject<GoogleMap>) => void
 }
 

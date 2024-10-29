@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import { SnackbarOrigin } from '@mui/joy/Snackbar';
+import { SnackbarOrigin } from '@mui/material/Snackbar';
 
 interface PositionedSnackbarState{
   open: boolean;
@@ -14,7 +14,7 @@ interface UsePositionedSnackbarProps extends PositionedSnackbarState {
 }
 
 interface PositionedSnackbarStore extends UsePositionedSnackbarProps {
-  // eslint-disable-next-line no-unused-vars
+   
   showSnackbar: (options: {
     title: string;
     message: string;

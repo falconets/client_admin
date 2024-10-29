@@ -14,7 +14,7 @@ import {
   TabPanel,
   TabPanelProps,
   Typography,
-} from "@mui/joy";
+} from "@mui/material";
 import React, { useState } from "react";
 import userStore from "@store/userStore";
 import {

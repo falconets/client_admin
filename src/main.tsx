@@ -6,17 +6,18 @@ import client from "@auth";
 import { CredentialProvider } from "@hooks/credentials/credentials";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
-import { CssBaseline, CssVarsProvider } from "@mui/joy";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "@themes";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-    <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
-       <CssBaseline />
-      <CredentialProvider>
-        <RouterProvider router={router} />
-      </CredentialProvider>
-      </CssVarsProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <CredentialProvider>
+          <RouterProvider router={router} />
+        </CredentialProvider>
+      </ThemeProvider>
     </ApolloProvider>
   </React.StrictMode>
 );

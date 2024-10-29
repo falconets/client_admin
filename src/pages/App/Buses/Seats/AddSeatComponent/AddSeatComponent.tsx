@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, FC } from "react";
-import { Box, Typography, Grid, Button } from "@mui/joy";
+import { Box, Typography, Grid, Button } from "@mui/material";
 import { Seat, SeatType } from "@types";
 import * as S from "./styled"
 
@@ -12,7 +12,7 @@ const AddSeatComponent: FC<OwnProps> = ({ addSeat }) => {
   const [rows, setRows] = useState<number>(0);
   const [columns, setColumns] = useState<number>(0);
   const [aisleColumn, setAisleColumn] = useState<number>(0);
-  const [showLabels, _setShowLabels] = useState<boolean>(false);
+  const showLabels = false;
 
   const createSeat = useCallback(
     (row: number, col: number, aisleColumn: number, seatLabelIndex: number): Seat => {

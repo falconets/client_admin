@@ -1,7 +1,7 @@
 import queries from "@api/queries"
 import { useQuery } from "@apollo/client"
 import LabelCard from "@common/LabelCard"
-import { Box, Skeleton, Stack } from "@mui/joy"
+import { Box, Skeleton, Stack } from "@mui/material"
 import userStore from "@store/userStore"
 import { RevenueReportByTime } from "@types"
 import { FC, useEffect, useState } from "react"
@@ -59,7 +59,7 @@ const RevenueReport: FC<ownprops> = ({time})=>{
                 break;  // Default to day if no time provided or invalid time provided.
         }
       }
-    }, [loading, error, time]);
+    }, [loading, error, time, data]);
 
     if (loading) {
         return (

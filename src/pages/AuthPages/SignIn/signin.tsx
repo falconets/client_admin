@@ -12,7 +12,7 @@ import {
   Link,
   Stack,
   Typography,
-} from "@mui/joy";
+} from "@mui/material";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import { FormEvent, useEffect } from "react";
 import { useMutation } from "@apollo/client";
@@ -33,7 +33,7 @@ interface SignInFormElement extends HTMLFormElement {
 }
 
 const Signin = () => {
-  const [signIn, { error, loading }] = useMutation(mutations.signin);
+  const [signIn, { error }] = useMutation(mutations.signin);
   const { dispatch } = useAppContext();
   const navigate = useNavigate()
 
@@ -56,9 +56,10 @@ const Signin = () => {
           password: data.password,
         },
       }).then((res) => {
-        const [token, userId] = res.data.signIn.split(" ");
-        console.log("Logged in successfully");
-        dispatch({ type: "LOGIN", payload: { token, userId } });
+        console.log('new data',res)
+        const {message, userId} = JSON.parse(res.data.signIn);
+        console.log(message);
+        dispatch({ type: "LOGIN", payload: { userId } });
         navigate('/')
       }).catch(error => console.error('error catched',error));
     } else {
@@ -82,7 +83,7 @@ const Signin = () => {
         }}
       />
       <Box
-        sx={(theme) => ({
+        sx={() => ({
           width:
             "clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)",
           transition: "width var(--Transition-duration)",
@@ -93,9 +94,6 @@ const Signin = () => {
           justifyContent: "flex-end",
           backdropFilter: "blur(12px)",
           backgroundColor: "rgba(255 255 255 / 0.2)",
-          [theme.getColorSchemeSelector("dark")]: {
-            backgroundColor: "rgba(19 19 24 / 0.4)",
-          },
         })}
       >
         <Box
@@ -121,10 +119,10 @@ const Signin = () => {
             }}
           >
             <Box sx={{ gap: 2, display: "flex", alignItems: "center" }}>
-              <IconButton variant="soft" color="primary" size="sm">
+              <IconButton color="primary" size="small">
                 <BadgeRoundedIcon />
               </IconButton>
-              <Typography level="title-lg">BusHub</Typography>
+              <Typography className="title-lg">BusHub</Typography>
             </Box>
             <ModeToggle />
           </Box>
@@ -155,17 +153,17 @@ const Signin = () => {
             {" "}
             <Stack gap={4} sx={{ mb: 2 }}>
               <Stack gap={1}>
-                <Typography level="h3">Sign in</Typography>
-                <Typography level="body-sm">
+                <Typography component="h3">Sign in</Typography>
+                <Typography component="p">
                   New to company?{" "}
-                  <Link onClick={() => navigate(Routes.signup)} level="title-sm">
+                  <Link onClick={() => navigate(Routes.signup)} >
                     Sign up!
                   </Link>
                 </Typography>
               </Stack>
               <Button
-                variant="soft"
-                color="neutral"
+                variant="outlined"
+                color="primary"
                 fullWidth
                 // startDecorator={<GoogleIcon />}
               >
@@ -173,14 +171,14 @@ const Signin = () => {
               </Button>
             </Stack>
             <Divider
-              sx={(theme) => ({
-                [theme.getColorSchemeSelector("light")]: {
-                  color: { xs: "#FFF", md: "text.tertiary" },
-                  "--Divider-lineColor": {
-                    xs: "#FFF",
-                    md: "var(--joy-palette-divider)",
-                  },
-                },
+              sx={() => ({
+                // [theme.getColorSchemeSelector("light")]: {
+                //   color: { xs: "#FFF", md: "text.tertiary" },
+                //   "--Divider-lineColor": {
+                //     xs: "#FFF",
+                //     md: "var(--joy-palette-divider)",
+                //   },
+                // },
               })}
             >
               or
@@ -190,7 +188,7 @@ const Signin = () => {
                 <FormControl required>
                   <FormLabel>Email</FormLabel>
                   <Input
-                    startDecorator={<EmailRounded />}
+                    startAdornment={<EmailRounded />}
                     type="email"
                     name="email"
                   />
@@ -198,7 +196,7 @@ const Signin = () => {
                 <FormControl required>
                   <FormLabel>Password</FormLabel>
                   <Input
-                    startDecorator={<Key />}
+                    startAdornment={<Key />}
                     type="password"
                     name="password"
                   />
@@ -211,12 +209,12 @@ const Signin = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Checkbox size="sm" label="Remember me" name="persistent" />
-                    <Link level="title-sm" href="#replace-with-a-link">
+                    <Checkbox size="small" value="Remember me" name="persistent" />
+                    <Link href="#replace-with-a-link">
                       Forgot your password?
                     </Link>
                   </Box>
-                  <Button type="submit" loading={loading} fullWidth>
+                  <Button type="submit" fullWidth>
                     Sign in
                   </Button>
                 </Stack>
@@ -224,14 +222,14 @@ const Signin = () => {
             </Stack>
           </Box>
           <Box component="footer" sx={{ py: 3 }}>
-            <Typography level="body-xs" textAlign="center">
+            <Typography textAlign="center">
               © Zamhubticketbus {new Date().getFullYear()}
             </Typography>
           </Box>
         </Box>
       </Box>
       <Box
-        sx={(theme) => ({
+        sx={() => ({
           height: "100%",
           position: "fixed",
           right: 0,
@@ -247,10 +245,10 @@ const Signin = () => {
           backgroundRepeat: "no-repeat",
           backgroundImage:
            "url(https://res.cloudinary.com/dqtrhmkxd/image/upload/v1704442027/Designer_3_fxkagh.png)", 
-          [theme.getColorSchemeSelector("dark")]: {
-            backgroundImage:
-              "url(https://res.cloudinary.com/dqtrhmkxd/image/upload/v1704442554/Designer_5_eew3nq.png)",
-          },
+          // [theme.getColorSchemeSelector("dark")]: {
+          //   backgroundImage:
+          //     "url(https://res.cloudinary.com/dqtrhmkxd/image/upload/v1704442554/Designer_5_eew3nq.png)",
+          // },
         })}
       />
     </>

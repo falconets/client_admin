@@ -4,7 +4,8 @@ import Toast from "@common/Toast";
 import { useEffect } from "react";
 import NavBar from "@common/NavBar";
 import Header from "@common/Header";
-import { Box, Container, CssBaseline, CssVarsProvider } from "@mui/joy";
+import { Box, Container, CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "@themes";
 
 
 const App = () => {
@@ -19,7 +20,7 @@ const App = () => {
 
 
   return (
-    <CssVarsProvider>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ display: "flex", minHeight: "100dvh", width: "100%" }}>
         <NavBar />
@@ -44,7 +45,7 @@ const App = () => {
           <Outlet />
         </Container>
       </Box>
-    </CssVarsProvider>
+    </ThemeProvider>
   );
 };
 

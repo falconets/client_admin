@@ -1,53 +1,54 @@
-import React, { useState, useEffect, FC } from "react";
-import { Box, Typography, Grid, Button } from "@mui/joy";
+import { useState, useEffect, FC } from "react";
+import { Box, Typography, Grid, Button } from "@mui/material";
 import useBusSeats from "@hooks/useBusSeats";
 import { BusSeats } from "@types";
 
 type ownprops = {
   busId?: string;
-  handleAddSeat: ()=> void
-  handleSelectedId: (id:string)=> void;
+  handleAddSeat: () => void;
+  handleSelectedId: (id: string) => void;
 };
 
-const SeatSelector: FC<ownprops> = ({busId, handleAddSeat, handleSelectedId}) => {
+const SeatSelector: FC<ownprops> = ({
+  busId,
+  handleAddSeat,
+  handleSelectedId,
+}) => {
   const [seats, setSeats] = useState<BusSeats[]>([]);
-  const [layout, setLayout]= useState<boolean>(false)
+  const [layout, setLayout] = useState<boolean>(false);
 
   const { getBusSeatsByBusId } = useBusSeats();
 
-useEffect(() => {
-  const fetchData = async () => {
-    if (busId) {
-      const busData = await getBusSeatsByBusId(busId);
-      setSeats(busData);
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      if (busId) {
+        const busData = await getBusSeatsByBusId(busId);
+        setSeats(busData);
+      }
+    };
+
+    fetchData();
+  }, [busId]);
+
+  const handleSetLayout = () => {
+    setLayout(!layout);
   };
 
-  fetchData();
-}, [busId]);
-
-
-
-  const handleSetLayout =()=>{
-    setLayout(!layout)
-  }
-
-  const handleOpenAddSeatModal = ()=>{
-    handleAddSeat()
-    handleSelectedId(busId as string)
-  }
-
-  const getSeatLabel = (seatNumber: string) => {
-    // Return the seat number directly
-    return seatNumber;
+  const handleOpenAddSeatModal = () => {
+    handleAddSeat();
+    handleSelectedId(busId as string);
   };
 
   if (seats.length === 0) {
     return (
-      <Box sx={{width: '100%', diplay: 'flex', gap: '2%'}}>
-      <Button onClick={handleOpenAddSeatModal} sx={{width:'48%'}}>Add layout</Button>
-      <Button sx={{width:'48%'}} color="danger">Delete</Button>
-    </Box>
+      <Box sx={{ width: "100%", diplay: "flex", gap: "2%" }}>
+        <Button onClick={handleOpenAddSeatModal} sx={{ width: "48%" }}>
+          Add layout
+        </Button>
+        <Button sx={{ width: "48%" }} color="danger">
+          Delete
+        </Button>
+      </Box>
     );
   }
 
@@ -117,9 +118,13 @@ useEffect(() => {
         `}
       </style>
 
-      <Box sx={{width: '100%', diplay: 'flex', gap: '2%'}}>
-        <Button onClick={handleSetLayout} sx={{width:'48%'}}>Edit</Button>
-        <Button sx={{width:'48%'}} color="danger">Delete</Button>
+      <Box sx={{ width: "100%", diplay: "flex", gap: "2%" }}>
+        <Button onClick={handleSetLayout} sx={{ width: "48%" }}>
+          Edit
+        </Button>
+        <Button sx={{ width: "48%" }} color="danger">
+          Delete
+        </Button>
       </Box>
 
       <Box className="showcase">
@@ -132,7 +137,7 @@ useEffect(() => {
           />
           <Typography>Window</Typography>
         </Box>
-      
+
         <Box className="subject">
           <Button
             className="seat selected"

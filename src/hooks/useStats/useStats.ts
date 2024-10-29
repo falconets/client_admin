@@ -9,7 +9,7 @@ const useStats = () => {
   const [revenueByPaymentMethodData, setRevenueByPaymentMethodData] =
     useState<CompanyRevenueByPaymentMethod[]>();
 
-  const { data: revenueByPaymentMethod } = useQuery(
+  const { data: revenueByPaymentMethod, loading, error } = useQuery(
     queries.company_revenue_by_payment_method,
     {
       variables: {
@@ -21,10 +21,10 @@ const useStats = () => {
 
 
   useEffect(() => {
-    if (revenueByPaymentMethod){
+    if (!error && !loading && revenueByPaymentMethod){
         setRevenueByPaymentMethodData(revenueByPaymentMethod.company_revenue_by_payment_method)
     }
-  }, [userInfos?.bus_company_id]);
+  }, [userInfos?.bus_company_id, revenueByPaymentMethod]);
 
   return { revenueByPaymentMethodData };
 };

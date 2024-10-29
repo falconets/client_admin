@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useMapInteraction from "@hooks/useMapInteraction";
-import { Input, List, ListItem, ListDivider } from "@mui/joy";
+import { Input, List, ListItem } from "@mui/material";
 import mapStore from "@store/mapStore";
 import React, { useState } from "react";
 
@@ -12,7 +12,7 @@ interface Location {
 
 interface Props {
   name?: string;
-  // eslint-disable-next-line no-unused-vars
+   
   onChange: (location: Location) => void;
 }
 
@@ -24,11 +24,11 @@ const LocationSearchBox: React.FC<Props> = ({ name, onChange }) => {
   const { predictions, placePredictions } = useMapInteraction({ mapRef });
 
   const omitCountry = (inputString:string) => {
-    let parts = inputString.split(", "); 
+    const parts = inputString.split(", "); 
     if (parts[parts.length - 1].toLowerCase() === "zambia") {
       parts.pop();
     }
-    let result = parts.join(", ");
+    const result = parts.join(", ");
     return result;
 }
 
@@ -83,7 +83,6 @@ const LocationSearchBox: React.FC<Props> = ({ name, onChange }) => {
                 >
                   {omitCountry(option.description)}
                 </ListItem>
-                <ListDivider />
               </React.Fragment>
             ))}
           </List>

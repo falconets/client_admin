@@ -1,51 +1,44 @@
-import * as React from 'react';
-import GlobalStyles from '@mui/joy/GlobalStyles';
-import IconButton from '@mui/joy/IconButton';
-import Sheet from '@mui/joy/Sheet';
+import React from 'react';
+import { AppBar, IconButton, Toolbar, useTheme } from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { toggleSidebar } from '../../../utils';
 
+const Header: React.FC = () => {
+  const theme = useTheme();
 
-
-const Header: React.FC = ()=> {
   return (
-    <Sheet
+    <AppBar
+      position="fixed"
       sx={{
-        display: { xs: 'flex', md: 'none' },
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        position: 'fixed',
         top: 0,
         width: '100vw',
-        height: 'var(--Header-height)',
-        zIndex: 9998,
-        p: 2,
-        gap: 1,
-        borderBottom: '1px solid',
-        borderColor: 'background.level1',
-        boxShadow: 'sm',
+        height: '52px',
+        zIndex: theme.zIndex.drawer + 1,
+        padding: theme.spacing(2),
+        gap: theme.spacing(1),
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        boxShadow: theme.shadows[1],
+        [theme.breakpoints.up('md')]: {
+          height: '0px',
+        },
       }}
     >
-      <GlobalStyles
-        styles={(theme) => ({
-          ':root': {
-            '--Header-height': '52px',
-            [theme.breakpoints.up('md')]: {
-              '--Header-height': '0px',
-            },
-          },
-        })}
-      />
-      <IconButton
-        onClick={() => toggleSidebar()}
-        variant="outlined"
-        color="neutral"
-        size="sm"
-      >
-        <MenuRoundedIcon />
-      </IconButton>
-    </Sheet>
+      <Toolbar>
+        <IconButton
+          onClick={toggleSidebar}
+          sx={{
+            color: theme.palette.text.primary,
+          }}
+          size="small"
+        >
+          <MenuRoundedIcon />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
 
-export default Header
+export default Header;

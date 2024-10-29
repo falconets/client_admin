@@ -1,17 +1,22 @@
 import { FC } from "react";
-import Button from "@mui/joy/Button";
+import { Button, Typography } from "@mui/material";
 import { SxProps } from "@mui/material";
-import { Typography } from "@mui/joy";
 
-type ownprops={
-    label: string,
-    onClick?: ()=> void, 
-    sx?: SxProps, 
-    labelSx?: SxProps, 
-    disabled?: boolean, 
-  };
+type ownprops = {
+  label: string;
+  onClick?: () => void;
+  sx?: SxProps;
+  labelSx?: SxProps;
+  disabled?: boolean;
+};
 
-const CustomButton: FC<ownprops> = ({ label, onClick, sx, labelSx, disabled = false }) => {
+const CustomButton: FC<ownprops> = ({
+  label,
+  onClick,
+  sx,
+  labelSx,
+  disabled = false,
+}) => {
   return (
     <Button
       onClick={onClick}
@@ -20,12 +25,10 @@ const CustomButton: FC<ownprops> = ({ label, onClick, sx, labelSx, disabled = fa
       }}
       disabled={disabled}
     >
-      <Typography sx={{ ...labelSx }}>{label}</Typography> {/* Customizable label */}
+      <Typography sx={{ ...labelSx }}>{label}</Typography>{" "}
+      {/* Customizable label */}
     </Button>
   );
 };
-
-
-
 
 export default CustomButton;

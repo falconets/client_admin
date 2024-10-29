@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client"
-import { Sheet, Skeleton, Table } from "@mui/joy"
+import { Box, Skeleton, Table } from "@mui/material"
 import queries from "@api/queries"
 import { BusRoutesProps, SeatAllocationStats } from "@types"
 import useBusRoutes from "@hooks/useBusRoutes"
@@ -26,7 +26,7 @@ const DesktopTable = ()=>{
     }
 
     if(loading){
-        return <Sheet>
+        return <Box>
             <Table>
                 <thead>
                     <tr>
@@ -47,11 +47,11 @@ const DesktopTable = ()=>{
                     </tr>
                 </tbody>
             </Table>
-        </Sheet>
+        </Box>
     }
 
     return(
-        <Sheet>
+        <Box>
             <Table>
                 <thead>
                     <tr>
@@ -76,7 +76,7 @@ const DesktopTable = ()=>{
                     })}
                 </tbody>
             </Table>
-        </Sheet>
+        </Box>
     )
 }
 

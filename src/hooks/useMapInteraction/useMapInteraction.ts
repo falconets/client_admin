@@ -1,11 +1,14 @@
-import { GoogleMap } from "@react-google-maps/api";
-import { useState } from "react";
+import { GoogleMap, Libraries, useJsApiLoader } from "@react-google-maps/api";
+import { useCallback, useState } from "react";
 
 interface props {
   mapRef: React.RefObject<GoogleMap> | null;
 }
 
-const useMapInteraction = ({ mapRef }: props) => {
+const libraries: Libraries = ["places"];
+
+
+const useMapInteraction = ({mapRef}: props) => {
   const [clickedCoordinate, setClickedCoordinate] =
     useState<google.maps.LatLngLiteral | null>(null);
   const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
@@ -19,8 +22,14 @@ const useMapInteraction = ({ mapRef }: props) => {
     google.maps.LatLngLiteral[]
   >([]);
 
+  //const [map, setMap] = React.useState<google.maps.Map | null>(null);
 
-
+  const apiKey = import.meta.env.VITE_X_GOOGL_API_KEY;
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: apiKey,
+    libraries,
+  });
 
   //const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null);
 
@@ -79,93 +88,115 @@ const useMapInteraction = ({ mapRef }: props) => {
   const calculateDistance = (
     point1: google.maps.LatLngLiteral,
     point2: google.maps.LatLngLiteral
-  ): number => {
-    const distanceInMeters =
-      window.google.maps.geometry.spherical.computeDistanceBetween(
-        new window.google.maps.LatLng(point1),
-        new window.google.maps.LatLng(point2)
-      );
+  ): number | null => {
+    if (isLoaded) {
+      const distanceInMeters =
+        window.google.maps.geometry.spherical.computeDistanceBetween(
+          new window.google.maps.LatLng(point1),
+          new window.google.maps.LatLng(point2)
+        );
 
-    return distanceInMeters;
+      return distanceInMeters;
+    } else {
+      return null;
+    }
   };
 
   /**
-   * this function would get input place and 
+   * this function would get input place and
    * update predictions of the places
-   * @param place 
+   * @param place
    */
-  const placePredictions = (place: string) => {
-    const autoCompleteService = new google.maps.places.AutocompleteService();
-    const displaySuggestions = (
-      predictions: google.maps.places.QueryAutocompletePrediction[] | null,
-      status: google.maps.places.PlacesServiceStatus
-    ) => {
-      if (!predictions || status != google.maps.places.PlacesServiceStatus.OK) {
-        return;
+  const placePredictions = useCallback(
+    (place: string) => {
+      if (isLoaded) {
+        const autoCompleteService =
+          new google.maps.places.AutocompleteService();
+        const displaySuggestions = (
+          predictions: google.maps.places.QueryAutocompletePrediction[] | null,
+          status: google.maps.places.PlacesServiceStatus
+        ) => {
+          if (
+            !predictions ||
+            status != google.maps.places.PlacesServiceStatus.OK
+          ) {
+            return;
+          }
+          setPredictions(predictions);
+        }; //end of display suggestion
+        autoCompleteService.getPlacePredictions(
+          {
+            input: place,
+            componentRestrictions: { country: "zm" },
+          },
+          displaySuggestions
+        );
       }
-      setPredictions(predictions);
-      console.log("predictions",predictions)
-    }; //end of display suggestion
-    autoCompleteService.getPlacePredictions(
-      { 
-        input: place,
-        componentRestrictions: {country: 'zm'}
-       },
-      displaySuggestions
-    );
-  };
+    },
+    [isLoaded]
+  );
 
   /**
    * the function would get an id of the place an set placedetails
    * of the place which is a location coordinate
-   * @param placeId 
+   * @param placeId
    */
-  const getPlaceDetails = (placeId: string) => {
-    const placesService = new google.maps.places.PlacesService(
-      document.createElement("div")
-    );
-    placesService.getDetails(
-      { placeId: placeId },
-      (placeDetails, detailsStatus) => {
-        if (
-          !placeDetails ||
-          detailsStatus !== google.maps.places.PlacesServiceStatus.OK
-        ) {
-          return;
-        }
-        const location = placeDetails.geometry?.location?.toJSON();
-        setPlaceDetails(location);
+  const getPlaceDetails = useCallback(
+    (placeId: string) => {
+      if (isLoaded) {
+        const placesService = new google.maps.places.PlacesService(
+          document.createElement("div")
+        );
+        placesService.getDetails(
+          { placeId: placeId },
+          (placeDetails, detailsStatus) => {
+            if (
+              !placeDetails ||
+              detailsStatus !== google.maps.places.PlacesServiceStatus.OK
+            ) {
+              return;
+            }
+            const location = placeDetails.geometry?.location?.toJSON();
+            setPlaceDetails(location);
+          }
+        );
       }
-    );
-  };
+    },
+    [isLoaded]
+  );
 
-  const getTravellingDetails = (startPoint: string, endPoint: string) => {
-    const directionsService = new window.google.maps.DirectionsService();
+  const getTravellingDetails = useCallback(
+    (startPoint: string, endPoint: string) => {
+      if (isLoaded) {
+        const directionsService = new window.google.maps.DirectionsService();
 
-    const directionsCallback = (
-      result: google.maps.DirectionsResult | null,
-      status: google.maps.DirectionsStatus
-    ) => {
+        const directionsCallback = (
+          result: google.maps.DirectionsResult | null,
+          status: google.maps.DirectionsStatus
+        ) => {
           if (result && status === "OK") {
-                setDistance(result.routes[0].legs[0].distance?.value ?? null);
-                setDuration(result.routes[0].legs[0].duration?.value ?? null);
+            setDistance(result.routes[0].legs[0].distance?.value ?? null);
+            setDuration(result.routes[0].legs[0].duration?.value ?? null);
+          }
+        };
+
+        const directionsOptions = {
+          origin: startPoint,
+          destination: endPoint,
+          travelMode: google.maps.TravelMode.DRIVING,
+        };
+
+        directionsService.route(directionsOptions, directionsCallback);
       }
-    };
-
-    const directionsOptions = {
-      origin: startPoint,
-      destination: endPoint,
-      travelMode: google.maps.TravelMode.DRIVING,
-    };
-
-    directionsService.route(directionsOptions, directionsCallback);
-  };
+    },
+    [isLoaded]
+  );
 
   /**
    * this would draw a route on the map from the start to
    * the end of the journey
-   * @param startPoint 
-   * @param endPoint 
+   * @param startPoint
+   * @param endPoint
    */
   const showRoute = (startPoint: string, endPoint: string) => {
     const directionsService = new window.google.maps.DirectionsService();

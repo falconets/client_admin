@@ -2,14 +2,14 @@ import useForm from "@hooks/useForm";
 import {
   Modal,
   Button,
-  ModalDialog,
   DialogTitle,
   Typography,
   DialogActions,
   FormControl,
   FormLabel,
   Input,
-} from "@mui/joy";
+  Box,
+} from "@mui/material";
 import { DialogContent } from "@mui/material";
 import { BusesProps } from "@types";
 import { FC } from "react";
@@ -50,7 +50,7 @@ const AddBusModal: FC<ownprops> = ({ isOpen, setIsOpen }) => {
       onClose={() => setIsOpen(!isOpen)}
       sx={{ zIndex: 10000 }}
     >
-      <ModalDialog
+      <Box
         sx={{ width: { md: "50%", sm: "95%", xs: "95%" }, mx: { md: "auto" } }}
       >
         <DialogTitle>Add a new Bus</DialogTitle>
@@ -87,7 +87,7 @@ const AddBusModal: FC<ownprops> = ({ isOpen, setIsOpen }) => {
         <DialogActions>
           <Button
             sx={{
-              backgroundColor: theme.colors.danger,
+              backgroundColor: theme.palette.error.main,
             }}
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -100,13 +100,13 @@ const AddBusModal: FC<ownprops> = ({ isOpen, setIsOpen }) => {
               !formData.plate_number ||
               !formData.seat_capacity
             }
-            sx={{backgroundColor: theme.colors.success}}
+            sx={{backgroundColor: theme.palette.success.main}}
             onClick={handleSubmit}
           >
             Save
           </Button>
         </DialogActions>
-      </ModalDialog>
+      </Box>
     </Modal>
   );
 };

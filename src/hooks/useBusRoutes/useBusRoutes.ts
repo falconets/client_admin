@@ -60,6 +60,7 @@ const useBusRoutes = () => {
 
       refetch();
     } catch (error) {
+      console.log(error);
       handleClose();
       showSnackbar({
         title: "Form Submission",
@@ -88,6 +89,7 @@ const useBusRoutes = () => {
         })
       );
     } catch (error) {
+      console.log(error);
       showSnackbar({
         title: "Failed, try again!",
         message: "Opp! something went wrong!",
@@ -112,6 +114,7 @@ const useBusRoutes = () => {
 
       refetch();
     } catch (error) {
+      console.log(error);
       showSnackbar({
         title: "Delete Action",
         message: "Failed to delete the root!",

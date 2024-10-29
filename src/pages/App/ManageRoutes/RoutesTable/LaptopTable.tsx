@@ -1,5 +1,5 @@
 import React from "react";
-import { Sheet, Switch, Table } from "@mui/joy";
+import { Box, Switch, Table } from "@mui/material";
 import useBusRoutes from "@hooks/useBusRoutes";
 import RowMenu from "./component/RowMenu";
 
@@ -7,9 +7,8 @@ const LaptopTable: React.FC = () => {
   const { listOfBusRoutes: routes, toggleBusRouteActive } = useBusRoutes();
 
   return (
-    <Sheet
+    <Box
       className="OrderTableContainer"
-      variant="outlined"
       sx={{
         display: { xs: "none", sm: "initial" },
         width: "100%",
@@ -22,7 +21,6 @@ const LaptopTable: React.FC = () => {
       <Table
         aria-labelledby="tableTitle"
         stickyHeader
-        hoverRow
         sx={{
           "--TableCell-headBackground": "var(--joy-palette-background-level1)",
           "--Table-headerUnderlineThickness": "1px",
@@ -91,7 +89,7 @@ const LaptopTable: React.FC = () => {
             ))}
         </tbody>
       </Table>
-    </Sheet>
+    </Box>
   );
 };
 

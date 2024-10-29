@@ -4,18 +4,18 @@ import {
   Marker,
   Polyline,
   useJsApiLoader,
-  Libraries
+  Libraries,
 } from "@react-google-maps/api";
 import useMapInteraction from "@hooks/useMapInteraction";
 import mapStore from "@store/mapStore";
 import React from "react";
 
-const MapView = () => {
+const MapView = React.memo(() => {
   const mapRef = createRef<GoogleMap>();
   //const [map, setMap] = React.useState<google.maps.Map | null>(null);
-  const libraries:Libraries = ['places']
- 
-  const { setMapRef, isLoaded:loaded, setIsLoaded } = mapStore();
+  const libraries: Libraries = ["places"];
+
+  const { setMapRef, isLoaded: loaded, setIsLoaded } = mapStore();
   const { markers, routeCoordinates, handleMapClick, handleRemoveMarker } =
     useMapInteraction({ mapRef });
   const mapStyles = {
@@ -24,34 +24,37 @@ const MapView = () => {
   };
 
   const apiKey = import.meta.env.VITE_X_GOOGL_API_KEY;
-  const { isLoaded} = useJsApiLoader({
+  const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: apiKey,
-    libraries
+    libraries,
   });
 
   useEffect(() => {
-    setIsLoaded(loaded)
-  },[loaded])
+    setIsLoaded(loaded);
+  });
 
   useEffect(() => {
     // Set the map reference in the store when the map is loaded
     if (mapRef.current) {
       setMapRef(mapRef);
     }
-  }, []);
+  });
 
-  console.log('from store', isLoaded)
+  console.log("from store", isLoaded);
 
-  const center = { lat: -15.0, lng: 30.0 };
+  
+  const onLoad = React.useCallback(
+    function callback(map: google.maps.Map) {
+      const center = { lat: -15.0, lng: 30.0 };
+      // This is just an example of getting and using the map instance!!! don't just blindly copy!
+      const bounds = new window.google.maps.LatLngBounds(center);
+      map.fitBounds(bounds);
 
-  const onLoad = React.useCallback(function callback(map: google.maps.Map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-
-    //setMap(map);
-  }, []);
+      //setMap(map);
+    },
+    []
+  );
 
   // const onUnmount = React.useCallback(function callback(map: google.maps.Map) {
   //   //setMap(null);
@@ -88,6 +91,6 @@ const MapView = () => {
       </GoogleMap>
     )
   );
-};
+});
 
-export default React.memo(MapView);
+export default MapView;

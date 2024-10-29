@@ -1,4 +1,4 @@
-import { TabPanel, TabPanelProps, Typography } from '@mui/joy'
+import { TabPanel, TabPanelProps, Typography } from '@mui/material'
 import React from 'react'
 
 type props = TabPanelProps

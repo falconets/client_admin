@@ -1,32 +1,58 @@
+import React, { useState } from 'react';
 import useBusRoutes from "@hooks/useBusRoutes";
 import { MoreHorizRounded } from "@mui/icons-material";
 import {
   Divider,
-  Dropdown,
   IconButton,
   Menu,
-  MenuButton,
   MenuItem,
-} from "@mui/joy";
+} from "@mui/material";
 
 function RowMenu({ routeId }: { routeId: string }) {
   const { deleteBusRoute } = useBusRoutes();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <Dropdown>
-      <MenuButton
-        slots={{ root: IconButton }}
-        slotProps={{ root: { variant: "plain", color: "neutral", size: "sm" } }}
+    <>
+      <IconButton
+        aria-controls={open ? 'row-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
       >
         <MoreHorizRounded />
-      </MenuButton>
-      <Menu size="sm" sx={{ minWidth: 140 }}>
-        <MenuItem>Edit</MenuItem>
+      </IconButton>
+      <Menu
+        id="row-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'row-menu-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>Edit</MenuItem>
         <Divider />
-        <MenuItem color="danger" onClick={() => deleteBusRoute(routeId)}>
+        <MenuItem
+          onClick={() => {
+            deleteBusRoute(routeId);
+            handleClose();
+          }}
+          sx={{ color: 'error.main' }}
+        >
           Delete
         </MenuItem>
       </Menu>
-    </Dropdown>
+    </>
   );
 }
 

@@ -2,8 +2,7 @@ import {
   AddCircleOutlineRounded,
   LocalPrintshopRounded,
 } from "@mui/icons-material";
-import { Box, Stack, Tooltip, Typography } from "@mui/joy";
-import routeModuleStore from "@store/routeModuleStore";
+import { Box, Stack, Tooltip, Typography } from "@mui/material";
 import BreadCrumb from "../BreadCrumb";
 import RoutesTable from "../RoutesTable";
 import AddRouteModal from "./component/AddRouteModal";
@@ -14,7 +13,7 @@ const Routes = () => {
 
   const handleIsAddModalOpen = () => {
     setIsAddModalOpen(!isAddModalOpen);
-  }
+  };
 
   return (
     <Box
@@ -49,24 +48,24 @@ const Routes = () => {
           justifyContent: "space-between",
         }}
       >
-        <Typography level="h2" component="h1">
+        <Typography component="h1">
           Routes
         </Typography>
         <Stack spacing={2} direction="row">
           <Tooltip
             title="add a new bus route"
             placement="top"
-            size="sm"
-            variant="soft"
             arrow
           >
-            <AddCircleOutlineRounded color="primary" sx={{ fontSize: 28 }} onClick={handleIsAddModalOpen} />
+            <AddCircleOutlineRounded
+              color="primary"
+              sx={{ fontSize: 28 }}
+              onClick={handleIsAddModalOpen}
+            />
           </Tooltip>
           <Tooltip
             title="Print the table"
             placement="top"
-            size="sm"
-            variant="soft"
             arrow
           >
             <LocalPrintshopRounded color="primary" sx={{ fontSize: 28 }} />
@@ -74,11 +73,10 @@ const Routes = () => {
         </Stack>
       </Box>
 
-      <Box sx={{px: { sm: 2, md: 6 }}}>
+      <Box sx={{ px: { sm: 2, md: 6 } }}>
         <RoutesTable />
-        <AddRouteModal open={isAddModalOpen} onClose={handleIsAddModalOpen}/>
+        <AddRouteModal open={isAddModalOpen} onClose={handleIsAddModalOpen} />
       </Box>
-
     </Box>
   );
 };

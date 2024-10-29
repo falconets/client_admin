@@ -1,4 +1,4 @@
-import { Box } from "@mui/joy";
+import { Box } from "@mui/material";
 import React from "react";
 
 const Toggler = ({
@@ -8,7 +8,7 @@ const Toggler = ({
 }: {
   defaultExpanded?: boolean;
   children: React.ReactNode;
-  // eslint-disable-next-line no-unused-vars
+   
   renderToggle: (params: {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;

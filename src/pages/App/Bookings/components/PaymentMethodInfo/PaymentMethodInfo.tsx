@@ -1,6 +1,6 @@
 import queries from "@api/queries";
 import { useQuery } from "@apollo/client";
-import { Box, Card, Typography } from "@mui/joy";
+import { Box, Card, Typography } from "@mui/material";
 import { CardContent } from "@mui/material";
 import userStore from "@store/userStore";
 import { CompanyRevenueByPaymentMethod } from "@types";
@@ -54,15 +54,12 @@ const PaymentMethodInfo: FC<ownprops> = ({ time }) => {
         case "month":
           res = data.company_revenue_payment_method_by_month;
           break;
-        case "month":
-          res = data.company_revenue_payment_method_by_year;
-          break;
         default:
           res = data.companyPaymentMethodByDay;
       }
       setReport(res);
     }
-  }, [loading, error, time]);
+  }, [loading, error, time, data]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

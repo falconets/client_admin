@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import eslint from 'vite-plugin-eslint';
 import path from 'path';
 
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), eslint()],
   build: {
     outDir:'dist',
     chunkSizeWarningLimit: 1000
@@ -28,7 +29,8 @@ export default defineConfig({
   },
   server:{
     port: parseInt(process.env.PORT as string) || 5073,
-    host:  `0.0.0.0`,
+    host:  '0.0.0.0',
+    hmr: false,
     // open: true,
     // cors: true,
     // proxy: {

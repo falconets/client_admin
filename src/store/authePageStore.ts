@@ -4,7 +4,7 @@ interface props{
       signin: boolean,
       signup: boolean,
       error: boolean,
-      // eslint-disable-next-line no-unused-vars
+       
       navigateTo: (page: 'signin' | 'signup' | 'error') => void
 }
 

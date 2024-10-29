@@ -1,69 +1,75 @@
 import {
   Modal,
   Button,
-  ModalDialog,
   DialogTitle,
   Typography,
   DialogActions,
-} from "@mui/joy";
-import { DialogContent } from "@mui/material";
+  Box,
+  DialogContent,
+} from "@mui/material";
 import { Seat } from "@types";
 import { FC, useState } from "react";
 import theme from "@themes";
 import useBusSeats from "@hooks/useBusSeats";
 import AddSeatComponent from "../Seats/AddSeatComponent";
 
-type ownprops = {
+type OwnProps = {
   isOpen: boolean;
   setIsOpen: () => void;
   busId: string;
 };
 
-const LayoutModal: FC<ownprops> = ({ isOpen, setIsOpen, busId }) => {
+const LayoutModal: FC<OwnProps> = ({ isOpen, setIsOpen, busId }) => {
   const { addSeat } = useBusSeats();
   const [seatLayout, setSeatLayout] = useState<Seat[] | null>(null);
 
-  const handleSubmit = (event: React.ChangeEvent<EventTarget>) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    try {
-      if (seatLayout) {
-        seatLayout.forEach((value) => {
-          console.log("bus id and value", {
-            busId: parseInt(busId.toString()),
-            value: value,
-          });
-          addSeat({
-            busId: parseInt(busId.toString()),
-            row: value.row,
-            col: value.col,
-            is_available: true,
-            seatType: value.type,
-            seatNumber: value.seatNumber.toString(),
-            aisleColumn: value.aisleColumn,
-          }).then(() => {
+    if (seatLayout) {
+      seatLayout.forEach((value) => {
+        addSeat({
+          busId: parseInt(busId, 10),
+          row: value.row,
+          col: value.col,
+          is_available: true,
+          seatType: value.type,
+          seatNumber: value.seatNumber.toString(),
+          aisleColumn: value.aisleColumn,
+        })
+          .then(() => {
             setIsOpen();
+          })
+          .catch((err) => {
+            console.error(err);
           });
-        });
-      }
-    } catch (err) {
-      console.error(err);
+      });
     }
   };
+
   return (
     <Modal open={isOpen} onClose={setIsOpen} sx={{ zIndex: 10000 }}>
-      <ModalDialog
-        sx={{ width: { md: "50%", sm: "95%", xs: "95%" }, mx: { md: "auto" } }}
+      <Box
+        sx={{
+          width: { md: "50%", sm: "95%", xs: "95%" },
+          mx: "auto",
+          mt: 4,
+          p: 2,
+          bgcolor: "background.paper",
+          boxShadow: 24,
+          borderRadius: 1,
+        }}
       >
         <DialogTitle>Describe the bus layout</DialogTitle>
-        <Typography>specify the number of colums, rows and ailse</Typography>
+        <Typography>Specify the number of columns, rows, and aisle</Typography>
         <DialogContent>
           <AddSeatComponent addSeat={setSeatLayout} />
         </DialogContent>
         <DialogActions>
           <Button
             sx={{
-              backgroundColor: theme.colors.danger,
+              backgroundColor: theme.palette.error.main,
+              color: theme.palette.error.contrastText,
             }}
             onClick={setIsOpen}
           >
@@ -71,13 +77,16 @@ const LayoutModal: FC<ownprops> = ({ isOpen, setIsOpen, busId }) => {
           </Button>
           <Button
             type="submit"
-            sx={{ backgroundColor: theme.colors.success }}
+            sx={{
+              backgroundColor: theme.palette.success.main,
+              color: theme.palette.success.contrastText,
+            }}
             onClick={handleSubmit}
           >
             Save
           </Button>
         </DialogActions>
-      </ModalDialog>
+      </Box>
     </Modal>
   );
 };

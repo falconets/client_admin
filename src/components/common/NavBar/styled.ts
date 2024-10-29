@@ -1,6 +1,6 @@
-import { Sheet } from '@mui/joy'
+import { Box } from '@mui/material'
 import styled from 'styled-components'
 
-export const Container = styled(Sheet)`
+export const Container = styled(Box)`
 
 `

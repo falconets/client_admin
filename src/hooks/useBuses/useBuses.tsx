@@ -36,7 +36,7 @@ const useBuses = () => {
    * @param inputs of type AddBusProps
    * @param onClose a function to close the module
    */
-  const handleAddBus = async (inputs: AddBusProps, onClose?: () => void) => {
+  const handleAddBus = async (inputs: AddBusProps, onClose: () => void) => {
     try {
       await addBus({
         variables: {
@@ -46,22 +46,28 @@ const useBuses = () => {
           seatCapacity: inputs.seat_capacity,
         },
       }).then((result) => {
-        if (buses) setBuses([...buses, result.data.createBus]);
+        if (buses)
+          setBuses((prev) => [
+            ...(prev as BusesProps[]),
+            result.data.createBus,
+          ]);
         else setBuses([result.data.createBus]);
+
         showSnackbar({
           title: "Success!",
           message: "Bus has been added successfully!",
           type: "success",
         });
-        onClose && onClose();
+        onClose();
       });
     } catch (error) {
+      console.log(error);
       showSnackbar({
         title: "Failed, try again!",
         message: "Opp! something went wrong!",
         type: "danger",
       });
-      onClose && onClose();
+      onClose();
     }
   };
 

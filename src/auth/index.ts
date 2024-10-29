@@ -3,10 +3,10 @@ import { onError } from "@apollo/client/link/error";
 import { ApolloLink } from '@apollo/client/link/core';
 import localforage from "localforage";
 
-//const baseUrl = import.meta.env.VITE_BASEURL_ADMIN;
+const baseUrl = import.meta.env.VITE_BASEURL_ADMIN;
 const devUrl = 'http://localhost:3000/api'
-//const isProduction = import.meta.env.VITE_IS_PRODUCTION 
-const mainUrl =  devUrl //isProduction !== "false" ? baseUrl :
+const isProduction = import.meta.env.VITE_IS_PRODUCTION 
+const mainUrl =  isProduction !== "false" ? baseUrl : devUrl
 
 const getItem = async (key: string): Promise<string | null> => localforage.getItem<string>(key);
 const removeItem = async (key: string): Promise<void> => localforage.removeItem(key);
@@ -41,6 +41,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const token = await getItem("token"); // Fetch token here
+console.log('token', token)
 
 const authMiddleware = new ApolloLink((operation, forward) => {
 

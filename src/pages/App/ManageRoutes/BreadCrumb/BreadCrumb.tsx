@@ -1,5 +1,5 @@
 import { ChevronRightRounded, HomeRounded } from "@mui/icons-material";
-import { Box, Breadcrumbs, Link, Typography } from "@mui/joy";
+import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
 import Routes from "@route";
 import { useNavigate } from "react-router-dom";
 

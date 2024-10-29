@@ -1,13 +1,14 @@
-import { Polyline } from '@react-google-maps/api'
+import { Polyline,   } from '@react-google-maps/api'
 import { useState,FC, useEffect } from 'react'
 
+
 type  props = {
-  routeCoords?: any[]
+  routeCoords?: []
 }
 type ownprops = props
 
 const CustomPolyline: FC<ownprops> = ({routeCoords}) => {
-      const [routeCoordinates, setCoordinates] = useState<any[]| undefined>(routeCoords)
+      const [routeCoordinates, setCoordinates] = useState<[]| undefined>(routeCoords)
 
       useEffect(()=>{
         setCoordinates(routeCoords)

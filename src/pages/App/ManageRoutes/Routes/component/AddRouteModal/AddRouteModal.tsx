@@ -6,12 +6,10 @@ import {
   FormLabel,
   Input,
   Modal,
-  ModalClose,
-  ModalDialog,
   Stack,
+  Box,
   Typography,
-} from "@mui/joy";
-import useViewportDimensions from "@hooks/useWindowDimensions";
+} from "@mui/material";
 import useForm from "@hooks/useForm";
 import useBusRoutes from "@hooks/useBusRoutes";
 import LocationSearchBox from "@common/LocationSearchBox";
@@ -39,10 +37,8 @@ type ownprops = {
 const AddRouteModule: React.FC<ownprops> = ({ open, onClose }) => {
   const { formData, sterilizeData, handleInputChange } =
     useForm<formElementProps>({});
-  let layout: "fullscreen" | "center" | undefined;
-  const { windowWidth } = useViewportDimensions();
   const { mapRef } = mapStore();
-  const { addBusRoute, mLoading } = useBusRoutes();
+  const { addBusRoute } = useBusRoutes();
   const { getTravellingDetails, duration, distance } = useMapInteraction({
     mapRef,
   });
@@ -67,8 +63,6 @@ const AddRouteModule: React.FC<ownprops> = ({ open, onClose }) => {
     }
   }, [distance, duration]);
 
-  if (windowWidth < 600) layout = "fullscreen";
-  else layout = "center";
 
   const handlePlaceDeparture = ({ value }: Location) => {
     setStartPoint(value as string);
@@ -109,12 +103,10 @@ const AddRouteModule: React.FC<ownprops> = ({ open, onClose }) => {
         zIndex: 10000,
       }}
     >
-      <ModalDialog
-        layout={layout}
+      <Box
         sx={{ width: { md: "50%", xs: "100%" } }}
-        variant="outlined"
       >
-        {layout === "fullscreen" && <ModalClose />}
+        {/* {layout === "fullscreen" && <ModalClose />} */}
         <DialogTitle>Add a new bus route</DialogTitle>
         <Typography>Fill in the information of the route.</Typography>
         <form onSubmit={handleSubmit}>
@@ -190,12 +182,12 @@ const AddRouteModule: React.FC<ownprops> = ({ open, onClose }) => {
                 required
               />
             </FormControl>
-            <Button type="submit" loading={mLoading}>
+            <Button type="submit" >
               Submit
             </Button>
           </Stack>
         </form>
-      </ModalDialog>
+      </Box>
     </Modal>
   );
 };

@@ -3,7 +3,7 @@ import {
   LocalPrintshopRounded,
 } from "@mui/icons-material";
 import * as S from "./styled";
-import { Box, Typography, Stack, Tooltip, Grid } from "@mui/joy";
+import { Box, Typography, Stack, Tooltip, Grid } from "@mui/material";
 import BreadCrumb from "./BreadCrumb";
 import Mobile from "./mobile";
 import AddBusModal from "./AddBusModal/AddBusModal";
@@ -36,15 +36,13 @@ const Buses = () => {
           justifyContent: "space-between",
         }}
       >
-        <Typography level="h2" component="h1">
+        <Typography className="h2" component="h1">
           Buses
         </Typography>
         <Stack spacing={2} direction="row">
           <Tooltip
             title="add a new bus route"
             placement="top"
-            size="sm"
-            variant="soft"
             arrow
           >
             <AddCircleOutlineRounded
@@ -56,8 +54,6 @@ const Buses = () => {
           <Tooltip
             title="Print the table"
             placement="top"
-            size="sm"
-            variant="soft"
             arrow
           >
             <LocalPrintshopRounded color="primary" sx={{ fontSize: 28 }} />

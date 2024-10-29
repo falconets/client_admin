@@ -1,4 +1,4 @@
-import { Box, Tabs } from "@mui/joy";
+import { Box, Tabs } from "@mui/material";
 import BreadCrumb from "./BreadCrumb";
 import TabComponent from "./TabComponent";
 import Panel from "./TabPanels"

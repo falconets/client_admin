@@ -2,33 +2,34 @@ import { ActionProps, StateProps } from "@types";
 import { createContext, useReducer, useEffect, ReactNode } from "react";
 import localforage from "localforage";
 
-const getItem = async (key: string): Promise<string | null> => {
-  return await localforage.getItem<string>(key);
-};
-
 const initialState: StateProps = {
-  isAuthenticated: !!(await getItem("token")),
-  token: await getItem("token"),
-  userId: await getItem("userId"),
+  isAuthenticated: false,
+  userId: null,
 };
 
-const credentialReducer = (state: StateProps, action: ActionProps): StateProps => {
+const credentialReducer = (
+  state: StateProps,
+  action: ActionProps
+): StateProps => {
   switch (action.type) {
-    case "LOGIN":
-      const { token, userId } = action.payload || {};
+    case "LOGIN": {
+      const { userId } = action.payload || {};
+      const auth:boolean = userId !== null
+      console.log("userId: " + userId);
+      console.log("isAuthenticated: " + auth);
       return {
         ...state,
-        isAuthenticated: !!token,
-        token: token || null,
+        isAuthenticated: auth,
         userId: userId || null,
       };
-    case "LOGOUT":
+    }
+    case "LOGOUT": {
       return {
         ...state,
         isAuthenticated: false,
-        token: null,
         userId: null,
       };
+    }
     default:
       return state;
   }
@@ -48,14 +49,27 @@ export const CredentialProvider: React.FC<{ children: ReactNode }> = ({
   const [state, dispatch] = useReducer(credentialReducer, initialState);
 
   useEffect(() => {
+    const loadCredentials = async () => {
+      const userId = await localforage.getItem<string>("userId");
+
+      if ( userId) {
+        dispatch({
+          type: "LOGIN",
+          payload: { userId },
+        });
+      }
+    };
+
+    loadCredentials();
+  }, []);
+
+  useEffect(() => {
     if (state.isAuthenticated) {
-      if (state.token) localforage.setItem("token", state.token);
       if (state.userId) localforage.setItem("userId", state.userId);
     } else {
-      localforage.removeItem("token");
       localforage.removeItem("userId");
     }
-  }, [state.isAuthenticated, state.token, state.userId]);
+  }, [state.isAuthenticated, state.userId]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

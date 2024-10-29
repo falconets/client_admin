@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { LogoutRounded } from "@mui/icons-material";
-import { Avatar, Typography, IconButton, Box } from "@mui/joy";
+import { Avatar, Typography, IconButton, Box } from "@mui/material";
 import queries from "@api/queries";
 import { useAppContext } from "@credentials";
 import userStore from "@store/userStore";
@@ -29,28 +29,27 @@ const CustomAvatar = () => {
 
   return (
     <Box sx={{ display: "flex", gap: 1, alignContent: "space-between", mt: 1 }}>
-      <Avatar variant="outlined" size="sm" src={userInfos?.avatar} />
+      <Avatar variant="rounded" src={userInfos?.avatar} />
       <Box sx={{ minWidth: 0, flex: 1 }}>
         <Typography
-          level="title-sm"
+          className="title-sm"
           sx={{ display: "flex", justifyContent: "flex-start" }}
         >
           {userInfos?.first_name}
         </Typography>
         <Typography
-          level="body-xs"
+          className="body-xs"
           sx={{ display: "flex", justifyContent: "flex-start" }}
         >
           {userInfos?.email}
         </Typography>
       </Box>
       <IconButton
-        size="sm"
-        variant="plain"
-        color="neutral"
+        size="small"
+        color="primary"
         onClick={handleLogout}
         sx={{
-            cursor: 'pointer'
+          cursor: "pointer",
         }}
       >
         <LogoutRounded />

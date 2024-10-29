@@ -1,51 +1,19 @@
-import CustomAvatar from "@common/CustomAvatar";
 import ModeToggle from "@common/ModeToggle";
-import Toggler from "@common/Toggler";
-import {
-  AltRouteRounded,
-  BrightnessAutoRounded,
-  DashboardRounded,
-  GroupRounded,
-  KeyboardArrowDown,
-  CalendarMonthRounded,
-  AccountCircleRounded,
-  PersonAddAlt1Rounded,
-  ManageAccountsRounded,
-  DirectionsBusRounded,
-  StyleRounded,
-  LeaderboardRounded,
-} from "@mui/icons-material";
+import { BrightnessAutoRounded } from "@mui/icons-material";
 import {
   Box,
-  Divider,
   GlobalStyles,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
   listItemButtonClasses,
-  ListItemContent,
-  Sheet,
+  Container,
   Typography,
-} from "@mui/joy";
+} from "@mui/material";
 import { closeSidebar } from "../../../utils";
-import { useMatch, useNavigate } from "react-router-dom";
-import Routes from "@route";
+import MenuContent from "@common/MenuContent";
 
 const Sidebar = () => {
-  const navigate = useNavigate();
-
-  const dashboardMatch = !!useMatch(Routes.dashboard);
-  const manageRoutesMatch = !!useMatch(Routes.manageRoutes);
-  const myProfileMatch = !!useMatch(Routes.myProfile);
-  const newUserMatch = !!useMatch(Routes.newUser);
-  const rolesMatch = !!useMatch(Routes.roles);
-  const scheduleMatch = !!useMatch(Routes.schedule);
-  const busesMatch = !!useMatch(Routes.buses);
-  const overviewMatch =!!useMatch(Routes.overview);
-
   return (
-    <Sheet
+    <Container
       className="Sidebar"
       sx={{
         position: { xs: "fixed", md: "sticky" },
@@ -100,10 +68,10 @@ const Sidebar = () => {
         onClick={() => closeSidebar()}
       />
       <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-        <IconButton variant="soft" color="primary" size="sm">
+        <IconButton color="primary" size="small">
           <BrightnessAutoRounded />
         </IconButton>
-        <Typography level="title-lg">Bushub</Typography>
+        <Typography className="title-lg">Bushub</Typography>
         <ModeToggle sx={{ ml: "auto" }} />
       </Box>
       <Box
@@ -118,184 +86,9 @@ const Sidebar = () => {
           },
         }}
       >
-        <List
-          size="sm"
-          sx={{
-            gap: 1,
-            position: "relative",
-            "--List-nestedInsetStart": "30px",
-            "--ListItem-radius": (theme) => theme.vars.radius.sm,
-          }}
-        >
-          <ListItem>
-            <ListItemButton
-              selected={dashboardMatch}
-              onClick={() => navigate(Routes.dashboard)}
-            >
-              <DashboardRounded />
-              <ListItemContent>
-                <Typography level="title-sm">Dashboard</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem>
-            <ListItemButton
-              selected={busesMatch}
-              onClick={() => navigate(Routes.buses)}
-            >
-                <DirectionsBusRounded />
-              <ListItemContent>
-                <Typography level="title-sm">Buses</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem>
-            <ListItemButton
-              selected={manageRoutesMatch}
-              onClick={() => navigate(Routes.manageRoutes)}
-            >
-              <AltRouteRounded />
-              <ListItemContent>
-                <Typography level="title-sm">Manage Routes</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem>
-            <ListItemButton
-              selected={scheduleMatch}
-              onClick={() => navigate(Routes.schedule)}
-            >
-              <CalendarMonthRounded />
-              <ListItemContent>
-                <Typography level="title-sm">Schedules</Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem nested>
-            <Toggler
-              renderToggle={({ open, setOpen }) => (
-                <ListItemButton
-                  onClick={() => {
-                    setOpen(!open);
-                  }}
-                >
-                  <GroupRounded />
-                  <ListItemContent>
-                    <Typography level="title-sm">Users</Typography>
-                  </ListItemContent>
-                  <KeyboardArrowDown
-                    sx={{ transform: open ? "rotate(180deg)" : "none" }}
-                  />
-                </ListItemButton>
-              )}
-              defaultExpanded
-            >
-              <List sx={{ gap: 0.5 }}>
-                <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton
-                    selected={myProfileMatch}
-                    onClick={() => navigate(Routes.myProfile)}
-                  >
-                    <AccountCircleRounded />
-                    <ListItemContent>
-                    <Typography level="title-sm">My profile</Typography>
-                    </ListItemContent>
-                  </ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton
-                    selected={newUserMatch}
-                    onClick={() => navigate(Routes.newUser)}
-                  >
-                    <PersonAddAlt1Rounded />
-                    <ListItemContent>
-                    <Typography level="title-sm">Create user</Typography>
-                    </ListItemContent>
-                  </ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton
-                    selected={rolesMatch}
-                    onClick={() => navigate(Routes.roles)}
-                  >
-                    <ManageAccountsRounded />
-                    <ListItemContent>
-                    <Typography level="title-sm">Roles & permissions</Typography>
-                    </ListItemContent>
-                  </ListItemButton>
-                </ListItem>
-              </List>
-            </Toggler>
-          </ListItem>
-
-          <ListItem nested>
-            <Toggler
-              renderToggle={({ open, setOpen }) => (
-                <ListItemButton
-                  onClick={() => {
-                    setOpen(!open);
-                  }}
-                >
-                  <StyleRounded />
-                  <ListItemContent>
-                    <Typography level="title-sm">Bookings</Typography>
-                  </ListItemContent>
-                  <KeyboardArrowDown
-                    sx={{ transform: open ? "rotate(180deg)" : "none" }}
-                  />
-                </ListItemButton>
-              )}
-              defaultExpanded
-            >
-              <List sx={{ gap: 0.5 }}>
-                <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton
-                    selected={overviewMatch}
-                    onClick={() => navigate(Routes.overview)}
-                  >
-                    <LeaderboardRounded />
-                    <ListItemContent>
-                    <Typography level="title-sm">Overview</Typography>
-                    </ListItemContent>
-                  </ListItemButton>
-                </ListItem>
-                {/* <ListItem>
-                  <ListItemButton
-                    selected={newUserMatch}
-                    onClick={() => navigate(Routes.newUser)}
-                  >
-                    <PersonAddAlt1Rounded />
-                    <ListItemContent>
-                    <Typography level="title-sm">Create user</Typography>
-                    </ListItemContent>
-                  </ListItemButton>
-                </ListItem>
-                <ListItem>
-                  <ListItemButton
-                    selected={rolesMatch}
-                    onClick={() => navigate(Routes.roles)}
-                  >
-                    <ManageAccountsRounded />
-                    <ListItemContent>
-                    <Typography level="title-sm">Roles & permissions</Typography>
-                    </ListItemContent>
-                  </ListItemButton>
-                </ListItem> */}
-              </List>
-            </Toggler>
-          </ListItem>
-
-          <Box sx={{ position: "absolute", bottom: 0, width: "100%" }}>
-            <Divider />
-            <CustomAvatar />
-          </Box>
-        </List>
+        <MenuContent />
       </Box>
-    </Sheet>
+    </Container>
   );
 };
 

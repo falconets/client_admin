@@ -4,13 +4,11 @@ export interface signInProps {
 }
 
 export interface PayloadProps {
-  token: string;
   userId: string;
 }
 
 export interface StateProps {
   isAuthenticated: boolean | null;
-  token: string | null;
   userId: string | null;
 }
 

@@ -2,12 +2,11 @@ import useBusRoutes from "@hooks/useBusRoutes";
 import {
   Box,
   List,
-  ListDivider,
   ListItem,
-  ListItemContent,
+  Divider,
   Switch,
   Typography,
-} from "@mui/joy";
+} from "@mui/material";
 import React from "react";
 import RowMenu from "./component/RowMenu";
 
@@ -18,56 +17,54 @@ const MobileTable: React.FC = () => {
     <Box sx={{ display: { xs: "block", sm: "none" } }}>
       {listOfBusRoutes &&
         listOfBusRoutes.map((route) => (
-          <List key={route.id} size="sm" sx={{ "--ListItem-paddingX": 0 }}>
+          <List key={route.id} sx={{ padding: 0 }}>
             <ListItem
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "start",
-                px: '10px'
+                alignItems: "flex-start",
+                paddingX: 1,
               }}
             >
-              <ListItemContent sx={{ display: 'flex', flexDirection:'column', alignItems: 'start' }}>
-                
-                  <Typography fontWeight={600} gutterBottom>
-                    {route.routeName}
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <Typography fontWeight={600} gutterBottom>
+                  {route.routeName}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                  {route.startLocation} - {route.endLocation}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 0.5,
+                    marginBottom: 1,
+                  }}
+                >
+                  <Typography variant="body2">
+                    Distance: {route.distanceInKm} km
                   </Typography>
-                  <Typography level="body-xs" gutterBottom>
-                    {route.startLocation} - {route.endLocation}
+                  <Typography variant="body2">&bull;</Typography>
+                  <Typography variant="body2">
+                    Duration: {route.durationInHours} hrs
                   </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: 0.5,
-                      mb: 1,
-                    }}
-                  >
-                    <Typography level="body-xs">
-                      Distance: {route.distanceInKm} km
-                    </Typography>
-                    <Typography level="body-xs">&bull;</Typography>
-                    <Typography level="body-xs">
-                      Duration: {route.durationInHours} hrs
-                    </Typography>
-                    <Typography level="body-xs">&bull;</Typography>
-                    <Typography level="body-xs">
-                      Price: k{route.price}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      mb: 1,
-                    }}
-                  >
-                    <RowMenu routeId={route.id as string} />
-                  </Box>
-                
-              </ListItemContent>
+                  <Typography variant="body2">&bull;</Typography>
+                  <Typography variant="body2">
+                    Price: k{route.price}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    marginBottom: 1,
+                  }}
+                >
+                  <RowMenu routeId={route.id as string} />
+                </Box>
+              </Box>
               <Box>
                 <Switch
                   checked={route.active}
@@ -75,10 +72,9 @@ const MobileTable: React.FC = () => {
                     toggleBusRouteActive(route.id as string, event.target.checked)
                   }
                 />
-
               </Box>
             </ListItem>
-            <ListDivider />
+            <Divider />
           </List>
         ))}
     </Box>

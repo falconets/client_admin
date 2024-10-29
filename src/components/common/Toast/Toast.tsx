@@ -1,6 +1,6 @@
 
 import usePositionedSnackbar from '@hooks/snackbar';
-import { Snackbar, Stack, Typography } from '@mui/joy';
+import { Snackbar, Stack, Typography } from '@mui/material';
 
 const Toast = () => {
       const {
@@ -22,9 +22,7 @@ const Toast = () => {
       open={isSnackbarOpen}
       onClose={handleClose}
       key={defaultPosition.vertical + defaultPosition.horizontal}
-      variant='soft'
       color={type}
-      invertedColors
       sx={{
         zIndex: 10000
       }}

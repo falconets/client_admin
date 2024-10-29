@@ -68,9 +68,9 @@ export const rgbaToHex = (rgba:string): string=>{
   const b = parseInt(rgbaMatch[3], 10);
   const a = rgbaMatch[4] !== "" ? parseFloat(rgbaMatch[4]) : 1;
 
-  let hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  const hex = ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 
-  let alphaHex = Math.round(a * 255).toString(16).padStart(2, '0');
+  const alphaHex = Math.round(a * 255).toString(16).padStart(2, '0');
 
   return `#${hex}${alphaHex}`;
 }

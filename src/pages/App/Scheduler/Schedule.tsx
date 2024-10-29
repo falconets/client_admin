@@ -1,6 +1,6 @@
 import "jqwidgets-scripts/jqwidgets/styles/jqx.base.css";
 import "jqwidgets-scripts/jqwidgets/styles/jqx.dark.css";
-import { Box, useTheme } from "@mui/joy";
+import { Box, useTheme } from "@mui/material";
 import JqxScheduler, {
   ISchedulerEditDialogCreate,
   jqx,
@@ -40,7 +40,7 @@ const Schedulers = () => {
 
   useEffect(() => {
     if (buses) {
-      const listBus: Object[] = [];
+      const listBus: object[] = [];
       buses.forEach((bus) =>{
         listBus.push({
           id: bus.bus_id,
@@ -56,13 +56,12 @@ const Schedulers = () => {
           borderColor: "#307DD7"
       })
     });
-      setAppointments([...appointments, ...listBus] as any);
-      console.log('list buses', listBus)
+      setAppointments((prev)=>[...prev, ...listBus] as BuseScheduleData[]);
     }
   }, [buses]);
 
   useEffect(() => {
-    let data = schedules.map((schedule: BusScheduleProps) => {
+    const data = schedules.map((schedule: BusScheduleProps) => {
       return {
         calendar: schedule.busPlateNumber,
         description: schedule.description,
@@ -77,10 +76,10 @@ const Schedulers = () => {
         borderColor: schedule.borderColor,
       };
     });
-    setAppointments([...appointments, ...data]);
+    setAppointments((prev)=>[...prev, ...data]);
   }, [schedules]);
   
-  const source: any = {
+  const source = {
     dataFields: [
       { name: "id", type: "string" },
       { name: "description", type: "string" },
@@ -99,7 +98,7 @@ const Schedulers = () => {
     localData: appointments,
   };
   
-  const dataAdapter: any = new jqx.dataAdapter(source);
+  const dataAdapter = new jqx.dataAdapter(source);
   
   const state = {
     appointmentDataFields: {
@@ -123,7 +122,7 @@ const Schedulers = () => {
     editDialogCreate: (
       _dialog: ISchedulerEditDialogCreate["dialog"],
       fields: ISchedulerEditDialogCreate["fields"],
-      _editAppointment: ISchedulerEditDialogCreate["editAppointment"]
+      //_editAppointment: ISchedulerEditDialogCreate["editAppointment"]
     ) => {
       // Hide other unnecessary fields
       fields.timeZoneContainer.hide();
@@ -183,8 +182,8 @@ const Schedulers = () => {
     else throw new Error("declared frequency is not found");
   };
 
-  const handleAddSchedule = (appointment: any) => {
-    console.log("add schedule", appointment.args);
+  
+  const handleAddSchedule = (appointment) => {
     const schedule = appointment.args.appointment;
     const recurrence = schedule.recurrencePattern;
 
@@ -224,12 +223,12 @@ const Schedulers = () => {
     console.log("filtered data", data);
   };
 
-  const handleDeleteAppointment = (data: any) => {
+  const handleDeleteAppointment = (data) => {
     const appointmentId = data.args.appointment.id;
     deleteSchedule(appointmentId);
   }
 
-  const handleRenderAppointment = (data: any) => {
+  const handleRenderAppointment = (data) => {
     const item = listOfBusRoutes?.find(
       (route) => route.id === data.appointment.subject
     );
