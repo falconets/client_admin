@@ -4,34 +4,44 @@ import Toast from "@common/Toast";
 import { useEffect } from "react";
 import NavBar from "@common/NavBar";
 import Header from "@common/Header";
-import { Box, Container, CssBaseline, ThemeProvider } from "@mui/material";
+import {
+  Box,
+  CssBaseline,
+  ThemeProvider,
+  useMediaQuery,
+} from "@mui/material";
 import theme from "@themes";
 
-
 const App = () => {
-  //const theme = useTheme();
-  //const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
     window.document.title = "BusHub";
   }, []);
 
-
-
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ display: "flex", minHeight: "100dvh", width: "100%" }}>
-        <NavBar />
-        <Header />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+          minHeight: "100dvh",
+          width: "100vw",
+        }}
+      >
+         <NavBar />
+        {!isLargeScreen && <Header />}
         <Toast />
-        <Container
+        <Box
           component="main"
           className="MainContent"
           sx={{
             pt: { xs: "calc(12px + var(--Header-height))", md: 3 },
             pb: { xs: 2, sm: 2, md: 3 },
+            m: 0,
+            pl: 0,
             flex: 1,
             display: "flex",
             flexDirection: "column",
@@ -42,8 +52,8 @@ const App = () => {
             overflow: "auto",
           }}
         >
-          <Outlet />
-        </Container>
+            <Outlet />
+        </Box>
       </Box>
     </ThemeProvider>
   );

@@ -4,16 +4,15 @@ import {
   Box,
   GlobalStyles,
   IconButton,
-  listItemButtonClasses,
-  Container,
   Typography,
+  listItemButtonClasses,
 } from "@mui/material";
 import { closeSidebar } from "../../../utils";
 import MenuContent from "@common/MenuContent";
 
 const Sidebar = () => {
   return (
-    <Container
+    <Box
       className="Sidebar"
       sx={{
         position: { xs: "fixed", md: "sticky" },
@@ -57,15 +56,15 @@ const Sidebar = () => {
           left: 0,
           width: "100vw",
           height: "100vh",
-          opacity: "var(--SideNavigation-slideIn)",
-          backgroundColor: "var(--joy-palette-background-backdrop)",
+          opacity: 0,
+          backgroundColor: "white",
           transition: "opacity 0.4s",
           transform: {
             xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--Sidebar-width, 0px)))",
             lg: "translateX(-100%)",
           },
         }}
-        onClick={() => closeSidebar()}
+        onClick={closeSidebar}
       />
       <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <IconButton color="primary" size="small">
@@ -84,11 +83,12 @@ const Sidebar = () => {
           [`& .${listItemButtonClasses.root}`]: {
             gap: 1.5,
           },
+          backgroundColor: 'white'
         }}
       >
         <MenuContent />
       </Box>
-    </Container>
+    </Box>
   );
 };
 
