@@ -28,7 +28,7 @@ const CustomAvatar = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", gap: 1, alignContent: "space-between", mt: 1 }}>
+    <Box sx={{ display: "flex", gap: 1, alignContent: "space-between",alignItems:'center', mt: 1 }}>
       <Avatar variant="rounded" src={userInfos?.avatar} />
       <Box sx={{ minWidth: 0, flex: 1 }}>
         <Typography

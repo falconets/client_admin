@@ -59,9 +59,8 @@ const Signin = () => {
         },
       })
         .then((res) => {
-          console.log("new data", res);
-          const { message, userId } = JSON.parse(res.data.signIn);
-          console.log('token',message);
+          const { userId } = JSON.parse(res.data.signIn);
+          
           dispatch({ type: "LOGIN", payload: { userId } });
           navigate("/");
         })

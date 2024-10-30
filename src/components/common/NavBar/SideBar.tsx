@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { closeSidebar } from "../../../utils";
 import MenuContent from "@common/MenuContent";
+import CustomAvatar from "@common/CustomAvatar";
 
 const Sidebar = () => {
   return (
@@ -87,6 +88,7 @@ const Sidebar = () => {
         }}
       >
         <MenuContent />
+        <CustomAvatar />
       </Box>
     </Box>
   );
