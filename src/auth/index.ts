@@ -1,17 +1,13 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { ApolloLink } from '@apollo/client/link/core';
-import localforage from "localforage";
 
 const baseUrl = import.meta.env.VITE_BASEURL_ADMIN;
 const devUrl = 'http://localhost:3000/api'
 const isProduction = import.meta.env.VITE_IS_PRODUCTION 
 const mainUrl =  isProduction !== "false" ? baseUrl : devUrl
 
-const getItem = async (key: string): Promise<string | null> => localforage.getItem<string>(key);
-const removeItem = async (key: string): Promise<void> => localforage.removeItem(key);
-
-const httpLink = createHttpLink({ uri: mainUrl });
+const httpLink = createHttpLink({ uri: mainUrl,   credentials: "include"});
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -33,15 +29,12 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       
       if (statusCode === 500) {
         console.error("[Server error]: Internal Server Error (500)");
-        removeItem("token");
       }
     }
   }
 
 });
 
-const token = await getItem("token"); // Fetch token here
-console.log('token', token)
 
 const authMiddleware = new ApolloLink((operation, forward) => {
 
@@ -49,7 +42,6 @@ const authMiddleware = new ApolloLink((operation, forward) => {
     headers: {
       ...headers,
       accept: 'application/json',
-      authorization: token ? `Bearer ${token}` : '',
     },
   }));
 

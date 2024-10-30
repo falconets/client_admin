@@ -3,6 +3,7 @@ import buses from "./buses";
 import schedules from "./schedules";
 import busSeats from "./busSeats";
 import stats from "./stats";
+import user from "./user";
 
 const listAllcompanies = gql`
   query AllCompanies {
@@ -21,24 +22,6 @@ const listAllcompanies = gql`
   }
 `;
 
-const userById = gql`
-  query UserById($userByIdId: Int) {
-    userById(id: $userByIdId) {
-      id
-      first_name
-      last_name
-      email
-      phone_number
-      type
-      gender
-      created_at
-      updated_at
-      bus_company_id
-      is_email_verified
-      avatar
-    }
-  }
-`;
 
 const listOfAllBusRoutes = gql`
   query GetBusRoutes {
@@ -78,11 +61,11 @@ const getBusRoutesByCompanyId = gql`
 
 export default {
   listAllcompanies,
-  userById,
   listOfAllBusRoutes,
   getBusRoutesByCompanyId,
   ...buses,
   ...schedules,
   ...busSeats,
-  ...stats
+  ...stats,
+  ...user
 };

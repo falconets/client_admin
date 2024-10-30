@@ -11,8 +11,8 @@ const Header: React.FC = () => {
       position="fixed"
       sx={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
         top: 0,
         width: '100vw',
         height: '52px',
@@ -24,9 +24,10 @@ const Header: React.FC = () => {
         [theme.breakpoints.up('md')]: {
           height: '0px',
         },
+        backgroundColor: 'white'
       }}
     >
-      <Toolbar>
+      <Toolbar sx={{backgroundColor: 'white'}}>
         <IconButton
           onClick={toggleSidebar}
           sx={{

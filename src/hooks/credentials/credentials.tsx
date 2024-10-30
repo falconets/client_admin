@@ -1,6 +1,7 @@
 import { ActionProps, StateProps } from "@types";
 import { createContext, useReducer, useEffect, ReactNode } from "react";
-import localforage from "localforage";
+import { useQuery } from "@apollo/client";
+import queries from "@api/queries";
 
 const initialState: StateProps = {
   isAuthenticated: false,
@@ -14,22 +15,18 @@ const credentialReducer = (
   switch (action.type) {
     case "LOGIN": {
       const { userId } = action.payload || {};
-      const auth:boolean = userId !== null
-      console.log("userId: " + userId);
-      console.log("isAuthenticated: " + auth);
       return {
         ...state,
-        isAuthenticated: auth,
+        isAuthenticated: !!userId,
         userId: userId || null,
       };
     }
-    case "LOGOUT": {
+    case "LOGOUT":
       return {
         ...state,
         isAuthenticated: false,
         userId: null,
       };
-    }
     default:
       return state;
   }
@@ -47,29 +44,41 @@ export const CredentialProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(credentialReducer, initialState);
+  const { data, loading, error } = useQuery(queries.validateSession);
 
+  // Load initial state from localStorage if available
   useEffect(() => {
-    const loadCredentials = async () => {
-      const userId = await localforage.getItem<string>("userId");
-
-      if ( userId) {
-        dispatch({
-          type: "LOGIN",
-          payload: { userId },
-        });
+    const savedState = localStorage.getItem("authState");
+    if (savedState) {
+      const parsedState = JSON.parse(savedState);
+      if (parsedState.isAuthenticated && parsedState.userId) {
+        dispatch({ type: "LOGIN", payload: { userId: parsedState.userId } });
       }
-    };
-
-    loadCredentials();
+    }
   }, []);
 
+  // Update localStorage whenever authentication state changes
   useEffect(() => {
     if (state.isAuthenticated) {
-      if (state.userId) localforage.setItem("userId", state.userId);
+      localStorage.setItem("authState", JSON.stringify(state));
     } else {
-      localforage.removeItem("userId");
+      localStorage.removeItem("authState");
     }
-  }, [state.isAuthenticated, state.userId]);
+  }, [state]);
+
+  // Session validation using Apollo Client's useQuery
+  useEffect(() => {
+    if (!loading && !error && data) {
+      const userId = data.validateSession;
+      dispatch({ type: "LOGIN", payload: { userId } });
+    } else if (!loading && error) {
+      console.log("No active session found:", error);
+    }
+  }, [data, loading, error]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

@@ -1,18 +1,20 @@
-import { useAppContext } from "@credentials"
-import { FC} from "react"
-import { Navigate} from "react-router-dom"
-import Routes from "../../route"
+import { useAppContext } from "@credentials";
+import { FC } from "react";
+import { Navigate } from "react-router-dom";
+import Routes from "../../route";
 
-type props={
-    children: React.ReactNode
-}
+type Props = {
+  children: React.ReactNode;
+};
 
-const ProtectedRoute: FC<props> = ({children}):React.ReactNode=>{
-    const {state} = useAppContext()
+const ProtectedRoute: FC<Props> = ({ children }): React.ReactNode => {
+  const { state } = useAppContext();
 
+  if (!state.isAuthenticated) {
+    return <Navigate to={Routes.signin} />;
+  }
 
-    if(state.userId) return children
-    else return <Navigate to={Routes.signin} />
-}
+  return children;
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;

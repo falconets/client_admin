@@ -13,6 +13,7 @@
     "@apollo/client": "^3.11.8",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@mui/lab": "^6.0.0-beta.13",
     "@mui/system": "^6.1.5",
     "@mui/x-charts": "^7.21.0",
     "@mui/x-data-grid": "^7.22.0",

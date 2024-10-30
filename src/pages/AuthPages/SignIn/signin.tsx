@@ -13,6 +13,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SendIcon from "@mui/icons-material/Send";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import { FormEvent, useEffect } from "react";
 import { useMutation } from "@apollo/client";
@@ -33,13 +35,13 @@ interface SignInFormElement extends HTMLFormElement {
 }
 
 const Signin = () => {
-  const [signIn, { error }] = useMutation(mutations.signin);
+  const [signIn, { error, loading }] = useMutation(mutations.signin);
   const { dispatch } = useAppContext();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    window.document.title = "BusHub"
-  }, [])
+  useEffect(() => {
+    window.document.title = "BusHub";
+  }, []);
 
   const handleSubmit = (event: FormEvent<SignInFormElement>) => {
     event.preventDefault();
@@ -55,13 +57,15 @@ const Signin = () => {
           email: data.email,
           password: data.password,
         },
-      }).then((res) => {
-        console.log('new data',res)
-        const {message, userId} = JSON.parse(res.data.signIn);
-        console.log(message);
-        dispatch({ type: "LOGIN", payload: { userId } });
-        navigate('/')
-      }).catch(error => console.error('error catched',error));
+      })
+        .then((res) => {
+          console.log("new data", res);
+          const { message, userId } = JSON.parse(res.data.signIn);
+          console.log('token',message);
+          dispatch({ type: "LOGIN", payload: { userId } });
+          navigate("/");
+        })
+        .catch((error) => console.error("error catched", error));
     } else {
       console.log("failed to sign in");
     }
@@ -156,9 +160,7 @@ const Signin = () => {
                 <Typography component="h3">Sign in</Typography>
                 <Typography component="p">
                   New to company?{" "}
-                  <Link onClick={() => navigate(Routes.signup)} >
-                    Sign up!
-                  </Link>
+                  <Link onClick={() => navigate(Routes.signup)}>Sign up!</Link>
                 </Typography>
               </Stack>
               <Button
@@ -209,14 +211,29 @@ const Signin = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Checkbox size="small" value="Remember me" name="persistent" />
+                    <Checkbox
+                      size="small"
+                      value="Remember me"
+                      name="persistent"
+                    />
                     <Link href="#replace-with-a-link">
                       Forgot your password?
                     </Link>
                   </Box>
-                  <Button type="submit" fullWidth>
-                    Sign in
-                  </Button>
+                  <LoadingButton
+                    type="submit"
+                    size="small"
+                    endIcon={<SendIcon />}
+                    loading={loading}
+                    loadingPosition="end"
+                    variant="contained"
+                    sx={{
+                      height: '40px',
+                      borderRadius: '8px',
+                    }}
+                  >
+                    Send
+                  </LoadingButton>
                 </Stack>
               </form>
             </Stack>
@@ -244,7 +261,7 @@ const Signin = () => {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundImage:
-           "url(https://res.cloudinary.com/dqtrhmkxd/image/upload/v1704442027/Designer_3_fxkagh.png)", 
+            "url(https://res.cloudinary.com/dqtrhmkxd/image/upload/v1704442027/Designer_3_fxkagh.png)",
           // [theme.getColorSchemeSelector("dark")]: {
           //   backgroundImage:
           //     "url(https://res.cloudinary.com/dqtrhmkxd/image/upload/v1704442554/Designer_5_eew3nq.png)",
