@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid2 as Grid, Typography } from '@mui/material';
 import CustomTabs from '@common/CustomTabs/CustomTabs';
 import DesktopTable from '../components/DesktopTable';
 import RevenueReport from '../components/RevenueReport';
@@ -43,13 +43,13 @@ const OverView: React.FC = () => {
         onTabChange={handleTabChange}
       />
       <Grid container spacing={3} sx={{ mt: 2 }}>
-        <Grid item xs={12}>
+        <Grid size={{xs:12}}>
           <RevenueReport time={time} />
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{xs:12}}>
           <DesktopTable />
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{xs:12}}>
           <PaymentMethodInfo time={time} />
         </Grid>
       </Grid>
