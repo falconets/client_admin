@@ -22,6 +22,8 @@ import { TreeItem2Icon } from '@mui/x-tree-view/TreeItem2Icon';
 import { TreeItem2Provider } from '@mui/x-tree-view/TreeItem2Provider';
 import { TreeViewBaseItem } from '@mui/x-tree-view/models';
 import { useTheme } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
+import Routes from '@route';
 
 type Color = 'blue' | 'green';
 
@@ -34,43 +36,29 @@ type ExtendedTreeItemProps = {
 const ITEMS: TreeViewBaseItem<ExtendedTreeItemProps>[] = [
   {
     id: '1',
-    label: 'Website',
+    label: 'Lusaka airport to kaoma',
     children: [
-      { id: '1.1', label: 'Home', color: 'green' },
-      { id: '1.2', label: 'Pricing', color: 'green' },
-      { id: '1.3', label: 'About us', color: 'green' },
-      {
-        id: '1.4',
-        label: 'Blog',
-        children: [
-          { id: '1.1.1', label: 'Announcements', color: 'blue' },
-          { id: '1.1.2', label: 'April lookahead', color: 'blue' },
-          { id: '1.1.3', label: "What's new", color: 'blue' },
-          { id: '1.1.4', label: 'Meet the team', color: 'blue' },
-        ],
-      },
+      { id: '1.1', label: 'Bus stop A', color: 'green' },
+      { id: '1.2', label: 'Bus stop B', color: 'green' },
+      { id: '1.3', label: 'Bus stop C', color: 'green' },
     ],
   },
   {
     id: '2',
-    label: 'Store',
+    label: 'Route B',
     children: [
-      { id: '2.1', label: 'All products', color: 'green' },
+      { id: '2.1', label: 'Bus stop A', color: 'green' },
       {
         id: '2.2',
-        label: 'Categories',
-        children: [
-          { id: '2.2.1', label: 'Gadgets', color: 'blue' },
-          { id: '2.2.2', label: 'Phones', color: 'blue' },
-          { id: '2.2.3', label: 'Wearables', color: 'blue' },
-        ],
+        label: 'Bus stop B',
+        color: 'green',
       },
-      { id: '2.3', label: 'Bestsellers', color: 'green' },
-      { id: '2.4', label: 'Sales', color: 'green' },
+      { id: '2.3', label: 'Bus stop C', color: 'green' },
+      { id: '2.4', label: 'Bus stop D', color: 'green' },
     ],
   },
-  { id: '4', label: 'Contact', color: 'blue' },
-  { id: '5', label: 'Help', color: 'blue' },
+  { id: '4', label: 'Route C', color: 'blue' },
+  { id: '5', label: 'Route D', color: 'blue' },
 ];
 
 function DotIcon({ color }: { color: string }) {
@@ -183,9 +171,14 @@ export default function CustomizedTreeView() {
       sx={{ display: 'flex', flexDirection: 'column', gap: '8px', flexGrow: 1 }}
     >
       <CardContent>
-        <Typography component="h2" variant="subtitle2">
-          Product tree
-        </Typography>
+        <Box sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+          <Typography component="h2" variant="subtitle2">
+            Bus Routes
+          </Typography>
+          <Link to={Routes.manageRoutes}>
+            More
+          </Link>
+        </Box>
         <RichTreeView
           items={ITEMS}
           aria-label="pages"

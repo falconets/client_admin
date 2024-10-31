@@ -9,43 +9,32 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
-import {
-  IndiaFlag,
-  UsaFlag,
-  BrazilFlag,
-  GlobeFlag,
-} from '../internals/components/CustomIcons';
-
 const data = [
-  { label: 'India', value: 50000 },
-  { label: 'USA', value: 35000 },
-  { label: 'Brazil', value: 10000 },
-  { label: 'Other', value: 5000 },
+  { label: 'Route 1', value: 4000 },
+  { label: 'Route 2', value: 3000 },
+  { label: 'Route 3', value: 1500 },
+  { label: 'Route 4', value: 1000 },
 ];
 
-const countries = [
+const routes = [
   {
-    name: 'India',
-    value: 50,
-    flag: <IndiaFlag />,
+    name: 'Route 1',
+    value: 40,
     color: 'hsl(220, 25%, 65%)',
   },
   {
-    name: 'USA',
-    value: 35,
-    flag: <UsaFlag />,
+    name: 'Route 2',
+    value: 30,
     color: 'hsl(220, 25%, 45%)',
   },
   {
-    name: 'Brazil',
-    value: 10,
-    flag: <BrazilFlag />,
+    name: 'Route 3',
+    value: 15,
     color: 'hsl(220, 25%, 30%)',
   },
   {
-    name: 'Other',
-    value: 5,
-    flag: <GlobeFlag />,
+    name: 'Route 4',
+    value: 10,
     color: 'hsl(220, 25%, 20%)',
   },
 ];
@@ -121,7 +110,7 @@ const colors = [
   'hsl(220, 20%, 25%)',
 ];
 
-export default function ChartUserByCountry() {
+export default function ChartBookingsByRoute() {
   return (
     <Card
       variant="outlined"
@@ -129,7 +118,7 @@ export default function ChartUserByCountry() {
     >
       <CardContent>
         <Typography component="h2" variant="subtitle2">
-          Users by country
+          Bookings by Route
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <PieChart
@@ -155,16 +144,16 @@ export default function ChartUserByCountry() {
               legend: { hidden: true },
             }}
           >
-            <PieCenterLabel primaryText="98.5K" secondaryText="Total" />
+            <PieCenterLabel primaryText="10.5K" secondaryText="Total Bookings" />
           </PieChart>
         </Box>
-        {countries.map((country, index) => (
+        {routes.map((route, index) => (
           <Stack
             key={index}
             direction="row"
             sx={{ alignItems: 'center', gap: 2, pb: 2 }}
           >
-            {country.flag}
+            <Box sx={{ width: 20, height: 20, backgroundColor: route.color, borderRadius: '50%' }} />
             <Stack sx={{ gap: 1, flexGrow: 1 }}>
               <Stack
                 direction="row"
@@ -175,19 +164,19 @@ export default function ChartUserByCountry() {
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: '500' }}>
-                  {country.name}
+                  {route.name}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {country.value}%
+                  {route.value}%
                 </Typography>
               </Stack>
               <LinearProgress
                 variant="determinate"
-                aria-label="Number of users by country"
-                value={country.value}
+                aria-label="Percentage of bookings by route"
+                value={route.value}
                 sx={{
                   [`& .${linearProgressClasses.bar}`]: {
-                    backgroundColor: country.color,
+                    backgroundColor: route.color,
                   },
                 }}
               />

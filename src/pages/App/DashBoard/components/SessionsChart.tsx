@@ -7,6 +7,21 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { LineChart } from '@mui/x-charts/LineChart';
 
+// SELECT 
+//     "routeId",
+//     DATE("createdAt") AS booking_date,
+//     COUNT("ticketId") AS tickets_booked
+// FROM 
+//     tickets
+// WHERE 
+//     "createdAt" >= NOW() - INTERVAL '30 days' AND
+// 	"companyId"= 1
+// GROUP BY 
+//     "routeId", DATE("createdAt")
+// ORDER BY 
+//     "routeId", booking_date;
+
+
 function AreaGradient({ color, id }: { color: string; id: string }) {
   return (
     <defs>
@@ -47,7 +62,7 @@ export default function SessionsChart() {
     <Card variant="outlined" sx={{ width: '100%' }}>
       <CardContent>
         <Typography component="h2" variant="subtitle2" gutterBottom>
-          Sessions
+        Daily Bookings
         </Typography>
         <Stack sx={{ justifyContent: 'space-between' }}>
           <Stack
@@ -59,12 +74,12 @@ export default function SessionsChart() {
             }}
           >
             <Typography variant="h4" component="p">
-              13,277
+              53,277
             </Typography>
             <Chip size="small" color="success" label="+35%" />
           </Stack>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Sessions per day for the last 30 days
+          Bookings per route for the last 30 days
           </Typography>
         </Stack>
         <LineChart
@@ -78,8 +93,8 @@ export default function SessionsChart() {
           ]}
           series={[
             {
-              id: 'direct',
-              label: 'Direct',
+              id: 'route1',
+              label: 'route1',
               showMark: false,
               curve: 'linear',
               stack: 'total',
@@ -92,8 +107,8 @@ export default function SessionsChart() {
               ],
             },
             {
-              id: 'referral',
-              label: 'Referral',
+              id: 'route2',
+              label: 'route2',
               showMark: false,
               curve: 'linear',
               stack: 'total',
@@ -106,8 +121,8 @@ export default function SessionsChart() {
               ],
             },
             {
-              id: 'organic',
-              label: 'Organic',
+              id: 'route3',
+              label: 'route3',
               showMark: false,
               curve: 'linear',
               stack: 'total',
